@@ -1,0 +1,51 @@
+---
+title: "Nationalratswahlen 2023"
+author: "Barbara Sutter"
+format:
+  html: 
+  embeded-resources: true
+  toc: true
+execute: 
+  warning: false
+editor_options: 
+  chunk_output_type: console
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+
+read_csv(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX (1).csv"))
+```
+
+# Einleitung
+
+Im Rahmen einer kantonalen Weiterbildung des Kantons Zürich - Data Science mit R - wird vertieften Einblick in die Anwendung von R vermittelt. Als Abschlussprojekt des Kurses wird ein OGD-Datensatz verwendet um das vermittelte und gelernte Wissen direkt an einem eigenen Projekt anzuwenden und zu vertiefen.
+
+Die in dem vorliegenden Projekt verwendeten Daten stammen von opendata.swiss und werden vom Bundesamt für Statistik zur Verfügung gestellt. Die Daten thematisieren die Nationalratswahlen der Schweiz und wurden am 30. November 2023 letztmals aktualisiert. Die Daten zeigen eine Zeitreihe zu den Listen, den Kandidierenden, der Parteistärke, der Anzahl Mandate, der Anzahl gewählten Frauen und Männern sowie die jeweils stärkste Partei der jeweiligen Nationalratswahlen. Die Daten sind auf Ebene Schweiz sowie auf Ebene der einzelnen Kantone vorhanden und beginnen im Jahr 1991 bis ins Jahr 2023.
+
+Link: [Nationalratswahlen: Zeitreihen zu Listen, Kandidierenden, Parteistärken, Mandaten, gewählten Frauen und Männern, stärkste Partei (Schweiz und Kantone) \| opendata.swiss](https://opendata.swiss/de/dataset/nationalratswahlen-zeitreihen-zu-listen-kandidierenden-parteistarken-mandaten-gewahlten-frauen-)
+
+Ziel der vorliegenden Abschlussarbeit soll sein, mittels den Daten aufzuzeigen, wie sich die Parteienstärken bei den Nationalratswahlen in den letzten gut 30 Jahren verändert haben. Weiter soll ein Fokus auf die Verteilung der Mandate, welche von Frauen besetzt werden, gelegt werden. Dazu stellen sich folgende Fragen: Ist hier eine Verschiebung zu einem höheren Frauenanteil sichtbar? Kann ein Zusammenhang zwischen Parteienstärke, Frauenanteil und Parteizugehörigkeit gezeigt werden?
+
+## Daten
+
+```{r}
+
+```
+
+## Analyseziele
+
+...
+
+# Daten Aufbereitung
+
+```{r}
+
+```
+
+# Daten Visualisierung
+
+```{r}
+
+```
