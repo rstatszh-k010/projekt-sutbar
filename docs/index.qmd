@@ -3,8 +3,6 @@ title: "Nationalratswahlen 2023"
 author: "Barbara Sutter"
 format:
   html: 
-  embeded-resources: true
-  toc: true
 execute: 
   warning: false
 editor_options: 
@@ -16,6 +14,19 @@ editor: visual
 library(tidyverse)
 
 read_csv(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX (1).csv"))
+
+
+# Perplexity meint:
+
+# Pfad zur CSV-Datei
+$csvPfad = "C:\Pfad\zu\deinerDatei.csv"
+
+# CSV einlesen mit Semikolon als Trennzeichen
+$daten = Import-Csv -Path $csvPfad -Delimiter ";"
+
+# Ausgabe der eingelesenen Daten (optional)
+$daten
+
 ```
 
 # Einleitung
@@ -31,6 +42,12 @@ Ziel der vorliegenden Abschlussarbeit soll sein, mittels den Daten aufzuzeigen, 
 ## Daten
 
 ```{r}
+NRW2023_zeitreihe <- read_csv(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX (1).csv", delimiter=";"))
+
+
+import pandas as pd
+df = pd.read_csv('datei.csv', delimiter=';')
+print(df.head())
 
 ```
 
@@ -41,6 +58,12 @@ Ziel der vorliegenden Abschlussarbeit soll sein, mittels den Daten aufzuzeigen, 
 # Daten Aufbereitung
 
 ```{r}
+glimpse(zeitreihen_parteien)
+
+names(zeitreihen_parteien)
+
+nrow(zeitreihen_parteien)
+
 
 ```
 
