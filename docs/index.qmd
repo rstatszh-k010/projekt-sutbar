@@ -12,20 +12,12 @@ editor: visual
 
 ```{r}
 library(tidyverse)
+library(dplyr)
+library(ggplot2)
 
-read_csv(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX (1).csv"))
+read_csv2(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX (1).csv"))
 
-
-# Perplexity meint:
-
-# Pfad zur CSV-Datei
-$csvPfad = "C:\Pfad\zu\deinerDatei.csv"
-
-# CSV einlesen mit Semikolon als Trennzeichen
-$daten = Import-Csv -Path $csvPfad -Delimiter ";"
-
-# Ausgabe der eingelesenen Daten (optional)
-$daten
+read_delim(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX (1).csv"), delim = ";")
 
 ```
 
@@ -42,13 +34,10 @@ Ziel der vorliegenden Abschlussarbeit soll sein, mittels den Daten aufzuzeigen, 
 ## Daten
 
 ```{r}
-NRW2023_zeitreihe <- read_csv(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX (1).csv", delimiter=";"))
+NRW2023_zeitreihe <- read_delim(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX (1).csv"), delim = ";")
 
 
-import pandas as pd
-df = pd.read_csv('datei.csv', delimiter=';')
-print(df.head())
-
+view(NRW2023_zeitreihe)
 ```
 
 ## Analyseziele
@@ -58,11 +47,49 @@ print(df.head())
 # Daten Aufbereitung
 
 ```{r}
-glimpse(zeitreihen_parteien)
+# Daten erkunden
+glimpse(NRW2023_zeitreihe)
 
-names(zeitreihen_parteien)
+names(NRW2023_zeitreihe)
 
-nrow(zeitreihen_parteien)
+nrow(NRW2023_zeitreihe)
+
+ncol(NRW2023_zeitreihe)
+
+# Die Variablen, welche für die Auswertungen nicht gebraucht werden, werden gefiltert und einen neuen Datensatz "NRW2023_zeitreihe_d" erstellt
+
+NRW2023_zeitreihe_d <- NRW2023_zeitreihe |> 
+  select(wahl_jahr, ebene_resultat, kanton_nummer, kanton_bezeichnung, partei_id, partei_bezeichnung_de, partei_staerke, flag_staerkste_partei, anzahl_listen, anzahl_kandidierende, anzahl_kandidierende_f, anzahl_kandidierende_m, anzahl_gewaehlte, anzahl_gewaehlte_f, anzahl_gewaehlte_m, frauen_anteil)
+
+view(NRW2023_zeitreihe_d)
+
+# Es werden die Wahljahre betrachtet, welche im Datensatz vorhanden sind
+
+NRW2023_zeitreihe_d |> 
+  distinct(wahl_jahr)
+
+# Es wird ein Datensatz erstellt, welcher zum einen nur die Resultate auf der Ebene Schweiz (NRW2023_zeitreihe_CH)  und zum anderen die Resultate nur auf kantonaler Ebene (NRW2023_zeitreihe_kanton) enthält
+
+NRW2023_zeitreihe_CH <- NRW2023_zeitreihe_d |> 
+  filter(ebene_resultat == "Schweiz")
+
+view(NRW2023_zeitreihe_CH)
+
+NRW2023_zeitreihe_Kanton <- NRW2023_zeitreihe_d |> 
+  filter(ebene_resultat != "Schweiz")
+
+# dasselbe wird danach auch für das Wahljahr 2023 auf nationaler Ebene erstellt
+
+NRW2023_CH_2023 <- NRW2023_zeitreihe_CH |> 
+  filter(wahl_jahr == "2023")
+
+
+
+ggplot(data = NRW2023_zeitreihe_d,
+       mapping = aes(x = partei_bezeichnung_de,
+                     y = )) +
+  geom_histogram()
+
 
 
 ```
@@ -71,4 +98,24 @@ nrow(zeitreihen_parteien)
 
 ```{r}
 
+# Zu Beginn werden erstmals die Daten aus dem Wahljahr 2023 betrachtet und visualisiert:
+
+NRW2023_CH_2023
+
+ggplot(data = NRW2023_CH_2023,
+       mapping = aes (x = partei_staerke,
+                      y = partei_bezeichnung_de)) +
+      geom_col() +
+      scale_fill_continuous(breaks = seq(0,7,1),
+                            expand = c(0,0)) +
+      theme_minimal(base_size = 12) +
+      labs(x = "Parteienstärke",
+           y = "Partei")
+
+ggplot(data = NRW2023_CH_2023, 
+       mapping = aes(x = partei_bezeichnung_de, 
+                     y = frauen_anteil)) +
+      geom_col() +
+      geom_path() +
+      scale_color_brewer(type = "qual", palette = 1)
 ```
