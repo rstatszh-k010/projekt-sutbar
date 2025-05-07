@@ -3,6 +3,8 @@ title: "Nationalratswahlen 2023"
 author: "Barbara Sutter"
 format:
   html: 
+    embeded-resources: true
+    toc: true
 execute: 
   warning: false
 editor_options: 
@@ -14,6 +16,7 @@ editor: visual
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
+library(forcats)
 
 read_csv2(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX (1).csv"))
 
@@ -31,7 +34,7 @@ Link: [Nationalratswahlen: Zeitreihen zu Listen, Kandidierenden, Parteistärken,
 
 Ziel der vorliegenden Abschlussarbeit soll sein, mittels den Daten aufzuzeigen, wie sich die Parteienstärken bei den Nationalratswahlen in den letzten gut 30 Jahren verändert haben. Weiter soll ein Fokus auf die Verteilung der Mandate, welche von Frauen besetzt werden, gelegt werden. Dazu stellen sich folgende Fragen: Ist hier eine Verschiebung zu einem höheren Frauenanteil sichtbar? Kann ein Zusammenhang zwischen Parteienstärke, Frauenanteil und Parteizugehörigkeit gezeigt werden?
 
-## Daten
+# Daten
 
 ```{r}
 NRW2023_zeitreihe <- read_delim(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX (1).csv"), delim = ";")
@@ -44,7 +47,7 @@ view(NRW2023_zeitreihe)
 
 ...
 
-# Daten Aufbereitung
+## Datenaufbereitung
 
 ```{r}
 # Daten erkunden
@@ -68,7 +71,7 @@ view(NRW2023_zeitreihe_d)
 NRW2023_zeitreihe_d |> 
   distinct(wahl_jahr)
 
-# Es wird ein Datensatz erstellt, welcher zum einen nur die Resultate auf der Ebene Schweiz (NRW2023_zeitreihe_CH)  und zum anderen die Resultate nur auf kantonaler Ebene (NRW2023_zeitreihe_kanton) enthält
+# Es wird ein Datensatz erstellt, welcher zum einen nur die Resultate auf der Ebene Schweiz (NRW2023_zeitreihe_CH)  und zum anderen die Resultate nur auf kantonaler Ebene (NRW2023_zeitreihe_Kanton) enthält
 
 NRW2023_zeitreihe_CH <- NRW2023_zeitreihe_d |> 
   filter(ebene_resultat == "Schweiz")
@@ -85,16 +88,9 @@ NRW2023_CH_2023 <- NRW2023_zeitreihe_CH |>
 
 
 
-ggplot(data = NRW2023_zeitreihe_d,
-       mapping = aes(x = partei_bezeichnung_de,
-                     y = )) +
-  geom_histogram()
-
-
-
 ```
 
-# Daten Visualisierung
+## Daten Visualisierung
 
 ```{r}
 
@@ -102,20 +98,62 @@ ggplot(data = NRW2023_zeitreihe_d,
 
 NRW2023_CH_2023
 
+# Visualisierung 1:
+
+# Bei der folgenden Tabelle werden die Parteienstärke bei den Wahlen 2023 abgebildet. Die stärkste Partei ist klar die SVP, gefolgt von der SP, danach positioniert sich die FDP knapp vor der Mitte.
+
+### Gerne würde ich hier noch die Parteienstärke der Grösse nach sortieren (1. SVP, 2. SP, 3. SP...) Wie mache ich das?
+### Ebenfalls habe ich versucht, die Balken mit den Prozentzahlen zu versehen. Kannst du mir da weiterhelfen?
+### Weiter würde ich gerne den Befehl Scale_fill_colorblind() laden, aber der exisitiert bei mir nicht. Welches Paket muss ich hier zusätzlich laden resp. was für alternative Farbbefehle würdest du mir empfehlen?
+
 ggplot(data = NRW2023_CH_2023,
-       mapping = aes (x = partei_staerke,
-                      y = partei_bezeichnung_de)) +
+       mapping = aes (y = partei_staerke,
+                      x = (partei_bezeichnung_de),
+                      label = partei_staerke)) +
       geom_col() +
+      theme_minimal() +
       scale_fill_continuous(breaks = seq(0,7,1),
                             expand = c(0,0)) +
       theme_minimal(base_size = 12) +
-      labs(x = "Parteienstärke",
-           y = "Partei")
+      theme(panel.grid.major.x = element_blank(),
+            axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+      labs(title = "Parteienstärke bei den Nationalratswahlen 2023",
+            y = "Parteienstärke in Prozent",
+            x = "Partei")
 
-ggplot(data = NRW2023_CH_2023, 
-       mapping = aes(x = partei_bezeichnung_de, 
-                     y = frauen_anteil)) +
-      geom_col() +
-      geom_path() +
-      scale_color_brewer(type = "qual", palette = 1)
+
+# Visualisierung 2:
+
+# Das Ziel dieser Visualisierung ist, den Frauenanteil über die verfügbaren Jahren hinweg mit einem Liniendiagramm darzustellen. 
+# Fragestellung: Wie hat sich der Frauenanteil bei den Nationalratswahlen bei den letzten neun Wahljahre gesamthaft verändert?
+
+### Was stimmt nicht, dass es mir nicht ein schönes Liniendiagramm ausspuckt? 
+### Der Befehl scale_color_colorblind() sowie theme_minimal() verändert nicht. Warum?
+
+ggplot(data = NRW2023_zeitreihe_Kanton,
+       mapping = aes(x = wahl_jahr, 
+                     y = frauen_anteil,
+                     color = anzahl_gewaehlte_f)) +
+      geom_line() +
+      # scale_color_colorblind() +
+      # theme_minimal()
+    
+  
+  
+# Visualisierung 3:
+
+# Wie hat sich die Parteienstärke bei den letzten neuen Nationalratswahlen am Beispiel der FDP im Kanton Zürich entwickelt?
+### Gerne würde ich hier noch einen Direktvergleich einfügen der fünf grössten Parteien im Kanton Zürich. Wie muss ich das Filtern, dass ich hier die FDP, SVP, SP, Mitte und ev. die Grünen noch in die Grafik einbinden kann?
+### Hier fällt mir auf, dass in den Daten die "Mitte" in den älteren Jahren noch als "CVP" erfasst wurde. Macht es hier aus deiner Sicht Sinn, die Daten im Grunddatensatz anzupassen und alle CVP's auf Mitte zu ändern oder soll bewusst ein Datenschnitt gemacht werden? Oder soll dafür noch einmal ein neuer Datensatz abgespeichert werden, damit die Grunddaten nicht verloren gehen? Welches Vorgehen schlägst du vor?
+
+NRW2023_zeitreihe_FDP_Zürich <- NRW2023_zeitreihe_Kanton |> 
+  filter(partei_bezeichnung_de == "FDP", kanton_bezeichnung == "Zürich")
+
+
+ggplot(data = NRW2023_zeitreihe_FDP_Zürich,
+       mapping = aes(x = wahl_jahr, 
+                     y = partei_staerke)) +
+      geom_line()
+
+
 ```
