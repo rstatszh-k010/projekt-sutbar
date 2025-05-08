@@ -52,6 +52,7 @@ NRW2023_zeitreihe <- read_delim(here::here("daten/raw/sd-t-17.02-NRW2023-zeitrei
 
 ```{r}
 # Daten erkunden
+
 glimpse(NRW2023_zeitreihe)
 
 names(NRW2023_zeitreihe)
@@ -104,7 +105,7 @@ NRW2023_zeitreihe_Kanton |>
 ### 1. Parteienstärke bei den Nationalratswahlen 2023
 
 ```{r}
-# Zu Beginn werden erstmals die Daten aus dem Wahljahr 2023 betrachtet und visualisiert:
+# Die Daten aus dem Wahljahr 2023 werden betrachtet und visualisiert:
 
 NRW2023_CH_2023
 
@@ -116,7 +117,7 @@ NRW2023_CH_2023
 NRW2023_CH_2023 |> 
   select(partei_bezeichnung_de, partei_staerke)
 
-# Die NA's bei der CVP und BDP werden auf 0 gesetzt, da der NA-Wert tatsächlich als 0 angesehen werden kann (Das Fehlen der Werte bedeutet inhaltlich 0, da es bei diesen zwei Parteien keine Nennungen gibt, da diese im Wahljahr 2023 nicht mehr exisitierten.)
+# Die NA's bei der CVP und BDP werden auf 0 gesetzt, da der NA-Wert tatsächlich als 0 angesehen werden kann (Das Fehlen der Werte bedeutet inhaltlich 0, da es bei diesen zwei Parteien keine Nennungen gibt. Im Wahljahr 2023 exisitierten sie nicht mehr unter dem alten Namen.)
 
 NRW2023_CH_2023_total <- NRW2023_CH_2023 |> 
   mutate(partei_staerke = replace_na(partei_staerke, 0),
@@ -130,7 +131,7 @@ NRW2023_CH_2023_total <- NRW2023_CH_2023 |>
          anzahl_gewaehlte_m = replace_na(anzahl_gewaehlte_m, 0),
          frauen_anteil = replace_na(frauen_anteil, 0))
 
-# Danach wird eine Grafik erstellt, bei welcher man die Verteilung der Parteien nach Grösse auf einen Blick ersichtlich ist
+# Danach wird eine Grafik erstellt, bei welcher man die Verteilung der Parteien nach Grösse auf einen Blick sieht
 
 ggplot(data = NRW2023_CH_2023_total,
        mapping = aes (y = partei_staerke,
@@ -149,22 +150,6 @@ ggplot(data = NRW2023_CH_2023_total,
 ```
 
 ```{r}
-
-# Visualisierung 2:
-
-# Das Ziel dieser Visualisierung ist, den Frauenanteil über die verfügbaren Jahren hinweg mit einem Liniendiagramm darzustellen. 
-# Fragestellung: Wie hat sich der Frauenanteil bei den Nationalratswahlen bei den letzten neun Wahljahre gesamthaft verändert?
-
-### Was stimmt nicht, dass es mir nicht ein schönes Liniendiagramm ausspuckt? 
-### Der Befehl scale_color_colorblind() sowie theme_minimal() verändert nicht. Warum?
-
-ggplot(data = NRW2023_zeitreihe_Kanton,
-       mapping = aes(x = wahl_jahr, 
-                     y = frauen_anteil,
-                     color = anzahl_gewaehlte_f)) +
-  geom_point() +
-      # scale_color_colorblind() 
-      # theme_minimal()
     
 ```
 
@@ -175,7 +160,7 @@ ggplot(data = NRW2023_zeitreihe_Kanton,
 ### 2. Anzahl gewählte Frauen
 
 ```{r}
-# Visualisierung 2: Summe Anzahl gewählte Frauen über alle Kantone und Parteien.
+# Visualisierung 2: Summe Anzahl gewählter Frauen über alle Kantone und Parteien.
 
     # Im Jahr 2023 sind viele NAs enthalten. Nachschauen warum das so ist: Es sind viele Parteien (z.B. CVP), welche im 2023 keine Liste resp. keine Kandididerende mehr hatten. Muss ich diese bearbeiten oder kann ich diese einfach ignorieren?
 
@@ -198,7 +183,7 @@ NRW2023_zeitreihe_Kanton |>
   
 
 
-# Tabelle 2: Anzahl gewählte Frauen (mit gt und einer function(x)):
+# Tabelle xy: Anzahl gewählte Frauen (mit gt und einer function(x)):
 
 NRW2023_zeitreihe_Kanton |> 
   select(wahl_jahr, frauen_anteil, anzahl_gewaehlte_f) |> 
@@ -210,7 +195,7 @@ gewaehlte_f_prozent <- function(sum_anzahl_gewaehlte_f) {
   round(sum_anzahl_gewaehlte_f / sum(anzahl_gewaehlte, na.rm = TRUE) * 100, 1)
 }
   
-# Nun habe ich die Prozentwerte mittels einer function(x) definiert. Nun würde ich gerne eine schöne Tabelle machen mit den Werten: wahl_jahr, sum_anzahl_gewaehlte_f, gewaehlte_f_prozent. Aber beim Befehl mutate() gibt es mir eine Fehlermeldung aus. Warum?
+# Nun habe ich die Prozentwerte mittels einer function(x) definiert. Gerne würde ich  eine schöne Tabelle machen mit den Werten: wahl_jahr, sum_anzahl_gewaehlte_f, gewaehlte_f_prozent. Aber beim Befehl mutate() gibt es mir eine Fehlermeldung aus. Warum?
 
 NRW2023_zeitreihe_Kanton |> 
   filter(!is.na(anzahl_gewaehlte_f)) |> 
@@ -225,17 +210,7 @@ NRW2023_zeitreihe_Kanton |>
 3.  Entwicklung Frauen-Anteil in den Parteien und Kantone
 
 ```{r}
-# Visualisierung 3: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
-#(Vorschlag 2.1)
 
-NRW2023_zeitreihe_Kanton |> 
-  filter(kanton_bezeichnung == "Zürich") |> 
-  filter(partei_bezeichnung_de == "SVP") |> 
-  ggplot(mapping = aes(x = wahl_jahr, 
-                       y = frauen_anteil,
-                       color = partei_bezeichnung_de)) +
-  geom_point() +
-  geom_line()
 ```
 
 ```{r}
@@ -284,10 +259,10 @@ NRW2023_zeitreihe_Kanton |>
 partei_fuenf_groesste <- c("FDP", "SVP", "SP", "GRÜNE", "CVP/Mitte")
 
 NRW2023_zeitreihe_Kanton |> 
-  mutate(partei_bezeichnung_de = case_when(
-    partei_bezeichnung_de == "CVP" ~ "CVP/Mitte",
-    partei_bezeichnung_de == "Mitte" ~ "CVP/Mitte",
-    .default = partei_bezeichnung_de
+ mutate(partei_bezeichnung_de = case_when(
+  partei_bezeichnung_de == "CVP" ~ "CVP/Mitte",
+  partei_bezeichnung_de == "Mitte" ~ "CVP/Mitte",
+  .default = partei_bezeichnung_de
   )) |>
   filter(kanton_bezeichnung == "Zürich") |> 
   # CVP und BDP haben NA für 2023. CVP weil sie umbenannt wurde. BDP ist hier nicht 
