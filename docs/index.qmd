@@ -18,6 +18,7 @@ library(dplyr)
 library(ggplot2)
 library(forcats)
 library(ggthemes)
+library(knitr)
 
 read_csv2(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX (1).csv"))
 
@@ -64,7 +65,7 @@ ncol(NRW2023_zeitreihe)
 NRW2023_zeitreihe_d <- NRW2023_zeitreihe |> 
   select(wahl_jahr, ebene_resultat, kanton_nummer, kanton_bezeichnung, partei_id, partei_bezeichnung_de, partei_staerke, flag_staerkste_partei, anzahl_listen, anzahl_kandidierende, anzahl_kandidierende_f, anzahl_kandidierende_m, anzahl_gewaehlte, anzahl_gewaehlte_f, anzahl_gewaehlte_m, frauen_anteil)
 
-# sview(NRW2023_zeitreihe_d)
+# view(NRW2023_zeitreihe_d)
 
 # Es werden die Wahljahre betrachtet, welche im Datensatz vorhanden sind
 
@@ -86,11 +87,21 @@ NRW2023_zeitreihe_Kanton <- NRW2023_zeitreihe_d |>
 NRW2023_CH_2023 <- NRW2023_zeitreihe_CH |> 
   filter(wahl_jahr == "2023")
 
+# Die CVP und die Mitte-Partei wird über den gesamten Datensatz in CVP/Mitte umbenannt, sodass die Daten vergleichbar bleiben.
+
+NRW2023_zeitreihe_Kanton |> 
+  mutate(partei_bezeichnung_de = case_when(
+    partei_bezeichnung_de == "CVP" ~ "CVP/Mitte",
+    partei_bezeichnung_de == "Mitte" ~ "CVP/Mitte",
+    .default = partei_bezeichnung_de
+  ))
 
 
 ```
 
 ## Daten Visualisierung
+
+### 1. Parteienstärke bei den Nationalratswahlen 2023
 
 ```{r}
 # Zu Beginn werden erstmals die Daten aus dem Wahljahr 2023 betrachtet und visualisiert:
@@ -101,25 +112,37 @@ NRW2023_CH_2023
 
 # Bei der folgenden Tabelle werden die Parteienstärke bei den Wahlen 2023 abgebildet. Die stärkste Partei ist klar die SVP, gefolgt von der SP, danach positioniert sich die FDP knapp vor der Mitte.
 
-### Gerne würde ich hier noch die Parteienstärke der Grösse nach sortieren (1. SVP, 2. SP, 3. SP...) Wie mache ich das?
-### Ebenfalls habe ich versucht, die Balken mit den Prozentzahlen zu versehen. Kannst du mir da weiterhelfen?
-### Weiter würde ich gerne den Befehl Scale_fill_colorblind() laden, aber der exisitiert bei mir nicht. Welches Paket muss ich hier zusätzlich laden resp. was für alternative Farbbefehle würdest du mir empfehlen?
 
 NRW2023_CH_2023 |> 
   select(partei_bezeichnung_de, partei_staerke)
 
-ggplot(data = NRW2023_CH_2023,
+# Die NA's bei der CVP und BDP werden auf 0 gesetzt, da der NA-Wert tatsächlich als 0 angesehen werden kann (Das Fehlen der Werte bedeutet inhaltlich 0, da es bei diesen zwei Parteien keine Nennungen gibt, da diese im Wahljahr 2023 nicht mehr exisitierten.)
+
+NRW2023_CH_2023_total <- NRW2023_CH_2023 |> 
+  mutate(partei_staerke = replace_na(partei_staerke, 0),
+         flag_staerkste_partei = replace_na(flag_staerkste_partei, 0),
+         anzahl_listen = replace_na(anzahl_listen, 0),
+         anzahl_kandidierende = replace_na(anzahl_kandidierende, 0),
+         anzahl_kandidierende_f = replace_na(anzahl_kandidierende_f, 0),
+         anzahl_kandidierende_m = replace_na(anzahl_kandidierende_m, 0),
+         anzahl_gewaehlte = replace_na(anzahl_gewaehlte, 0),
+         anzahl_gewaehlte_f = replace_na(anzahl_gewaehlte_f, 0),
+         anzahl_gewaehlte_m = replace_na(anzahl_gewaehlte_m, 0),
+         frauen_anteil = replace_na(frauen_anteil, 0))
+
+# Danach wird eine Grafik erstellt, bei welcher man die Verteilung der Parteien nach Grösse auf einen Blick ersichtlich ist
+
+ggplot(data = NRW2023_CH_2023_total,
        mapping = aes (y = partei_staerke,
                       x = reorder(partei_bezeichnung_de, partei_staerke))) +
       geom_col() +
       geom_text(aes(label = paste0(round(partei_staerke, 1), "%")),
                 vjust = -0.5, size = 3) +
       theme_minimal() +
-      #scale_fill_continuous(breaks = seq(0,7,1),
-      #                      expand = c(0,0)) +
       theme_minimal(base_size = 12) +
       theme(panel.grid.major.x = element_blank(),
             axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+      # scale_fill_manual(values = c("blue")) +
       labs(title = "Parteienstärke bei den Nationalratswahlen 2023",
             y = "Parteienstärke in Prozent",
             x = "Partei")
@@ -139,76 +162,124 @@ ggplot(data = NRW2023_zeitreihe_Kanton,
        mapping = aes(x = wahl_jahr, 
                      y = frauen_anteil,
                      color = anzahl_gewaehlte_f)) +
-  geom_point() 
-  #scale_color_colorblind() 
+  geom_point() +
+      # scale_color_colorblind() 
       # theme_minimal()
     
-# Vorschlag 1: Summe Anzahl gewählte Frauen über alle Kantone und Parteien.
-      
+```
+
+```{r}
+
+```
+
+### 2. Anzahl gewählte Frauen
+
+```{r}
+# Visualisierung 2: Summe Anzahl gewählte Frauen über alle Kantone und Parteien.
+
+    # Im Jahr 2023 sind viele NAs enthalten. Nachschauen warum das so ist: Es sind viele Parteien (z.B. CVP), welche im 2023 keine Liste resp. keine Kandididerende mehr hatten. Muss ich diese bearbeiten oder kann ich diese einfach ignorieren?
+
 NRW2023_zeitreihe_Kanton |> 
   select(wahl_jahr, frauen_anteil, anzahl_gewaehlte_f) |> 
-  # Im Jahr 2023 sind viele NAs enthalten. Nachschauen warum das so ist.
+  filter(!is.na(anzahl_gewaehlte_f)) |> 
+  group_by(wahl_jahr) |> 
+  summarise(sum_anzahl_gewaehlte_f = sum(anzahl_gewaehlte_f)) |> 
+  ggplot(aes(x = wahl_jahr,
+             y = sum_anzahl_gewaehlte_f)) +
+  geom_point() +
+  geom_line() +
+  theme_minimal() +
+      theme_minimal(base_size = 12) +
+      theme(panel.grid.major.x = element_blank(),
+            axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+      labs(title = "Total gewählte Frauen über alle Kantone und Parteien",
+            y = "Summe aller gewählten Frauen",
+            x = "Jahr der Nationalratswahlen")
+  
+
+
+# Tabelle 2: Anzahl gewählte Frauen (mit gt und einer function(x)):
+
+NRW2023_zeitreihe_Kanton |> 
+  select(wahl_jahr, frauen_anteil, anzahl_gewaehlte_f) |> 
   filter(!is.na(anzahl_gewaehlte_f)) |> 
   group_by(wahl_jahr) |> 
   summarise(sum_anzahl_gewaehlte_f = sum(anzahl_gewaehlte_f)) |> 
   
-  # plot
+gewaehlte_f_prozent <- function(sum_anzahl_gewaehlte_f) {
+  round(sum_anzahl_gewaehlte_f / sum(anzahl_gewaehlte, na.rm = TRUE) * 100, 1)
+}
   
-  ggplot(aes(x = wahl_jahr,
-             y = sum_anzahl_gewaehlte_f)) +
-  geom_point() +
-  geom_line()
+# Nun habe ich die Prozentwerte mittels einer function(x) definiert. Nun würde ich gerne eine schöne Tabelle machen mit den Werten: wahl_jahr, sum_anzahl_gewaehlte_f, gewaehlte_f_prozent. Aber beim Befehl mutate() gibt es mir eine Fehlermeldung aus. Warum?
 
+NRW2023_zeitreihe_Kanton |> 
+  filter(!is.na(anzahl_gewaehlte_f)) |> 
+  group_by(wahl_jahr) |> 
+  summarise(sum_anzahl_gewaehlte_f = sum(anzahl_gewaehlte_f)) |>
+  mutate(prozent = gewaehlte_f_prozent(total)) |> 
+  gt::gt()
+  
 
-# Vorschlag 2.1: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
+```
+
+3.  Entwicklung Frauen-Anteil in den Parteien und Kantone
+
+```{r}
+# Visualisierung 3: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
+#(Vorschlag 2.1)
 
 NRW2023_zeitreihe_Kanton |> 
   filter(kanton_bezeichnung == "Zürich") |> 
-  #filter(partei_bezeichnung_de == "SVP") |> 
-  
+  filter(partei_bezeichnung_de == "SVP") |> 
   ggplot(mapping = aes(x = wahl_jahr, 
                        y = frauen_anteil,
                        color = partei_bezeichnung_de)) +
   geom_point() +
-  geom_line() #+
-  #scale_color_colorblind() 
+  geom_line()
+```
 
-# Vorschlag 2.2: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
+```{r}
+
+# Visualisierung 3.1: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
+
+## gerne würde ich hier die Bundesratsparteien plus die beiden Parteien mit Anspruch darauf filtern (SVP, SP, FDP, Mitte, Grüne und GLP), da alle Parteien zusammen zu unübersichtlich werden: filter(partei_bezeichnung_de in %in% c("SVP, "SP"...)) funktioniert aber nicht... Any ideas? :)
+
 
 NRW2023_zeitreihe_Kanton |> 
   filter(kanton_bezeichnung == "Zürich") |> 
-  #filter(partei_bezeichnung_de == "SVP") |> 
-  
+  # filter(partei_bezeichnung_de == "SVP") |> 
+  ggplot(mapping = aes(x = wahl_jahr, 
+                       y = frauen_anteil,
+                       color = partei_bezeichnung_de)) +
+  geom_point() +
+  geom_line()  
+
+# Visualisierung 3.2: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
+## Vielen Dank für den Vorschlag. Den übernehme ich sehr gerne!
+
+NRW2023_zeitreihe_Kanton |> 
+  filter(kanton_bezeichnung == "Zürich") |> 
+  # filter(partei_bezeichnung_de == "SVP") |> 
   ggplot(mapping = aes(x = wahl_jahr, 
                        y = frauen_anteil)) +
   geom_point() +
   geom_line() +
   facet_wrap(~partei_bezeichnung_de)
 
-# Vorschlag 3: Entwicklung Frauen-Anteil pro Partei in einer Partei
 
-NRW2023_zeitreihe_Kanton |> 
-  #filter(kanton_bezeichnung == "Zürich") |> 
-  filter(partei_bezeichnung_de == "SVP") |> 
-  
-  ggplot(mapping = aes(x = wahl_jahr, 
-                       y = frauen_anteil,
-                       color = partei_bezeichnung_de)) +
-  geom_point() +
-  geom_line() +
-  facet_wrap(~kanton_bezeichnung)
 
 
 
 ```
 
+### 4. Direktvergleich der Parteienstärke im Kanton Zürich
+
 ```{r}
   
-# Visualisierung 3:
+# Visualisierung 4:
 
-# Wie hat sich die Parteienstärke bei den letzten neuen Nationalratswahlen am Beispiel der FDP im Kanton Zürich entwickelt?
 
-### Gerne würde ich hier noch einen Direktvergleich einfügen der fünf grössten Parteien im Kanton Zürich. Wie muss ich das Filtern, dass ich hier die FDP, SVP, SP, Mitte und ev. die Grünen noch in die Grafik einbinden kann?
+# Direktvergleich der Parteienstärke der letzten neun Nationalratswahlen der fünf grössten Parteien im Kanton Zürich
 
 partei_fuenf_groesste <- c("FDP", "SVP", "SP", "GRÜNE", "CVP/Mitte")
 
@@ -232,7 +303,8 @@ NRW2023_zeitreihe_Kanton |>
   geom_point() +
   geom_line()
 
-### Hier fällt mir auf, dass in den Daten die "Mitte" in den älteren Jahren noch als "CVP" erfasst wurde. Macht es hier aus deiner Sicht Sinn, die Daten im Grunddatensatz anzupassen und alle CVP's auf Mitte zu ändern oder soll bewusst ein Datenschnitt gemacht werden? Oder soll dafür noch einmal ein neuer Datensatz abgespeichert werden, damit die Grunddaten nicht verloren gehen? Welches Vorgehen schlägst du vor?
+
+# Wie hat sich die Parteienstärke bei den letzten neun Nationalratswahlen am Beispiel der FDP im Kanton Zürich entwickelt?
 
 NRW2023_zeitreihe_FDP_Zürich <- NRW2023_zeitreihe_Kanton |> 
   filter(partei_bezeichnung_de == "FDP", kanton_bezeichnung == "Zürich")
