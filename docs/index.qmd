@@ -189,10 +189,10 @@ NRW2023_zeitreihe_Kanton |>
   select(wahl_jahr, frauen_anteil, anzahl_gewaehlte_f) |> 
   filter(!is.na(anzahl_gewaehlte_f)) |> 
   group_by(wahl_jahr) |> 
-  summarise(sum_anzahl_gewaehlte_f = sum(anzahl_gewaehlte_f)) |> 
+  summarise(sum_anzahl_gewaehlte_f = sum(anzahl_gewaehlte_f)) 
   
-gewaehlte_f_prozent <- function(sum_anzahl_gewaehlte_f) {
-  round(sum_anzahl_gewaehlte_f / sum(anzahl_gewaehlte, na.rm = TRUE) * 100, 1)
+gewaehlte_f_prozent <- function(x) {
+  round(x / sum(x, na.rm = TRUE) * 100, 1)
 }
   
 # Nun habe ich die Prozentwerte mittels einer function(x) definiert. Gerne würde ich  eine schöne Tabelle machen mit den Werten: wahl_jahr, sum_anzahl_gewaehlte_f, gewaehlte_f_prozent. Aber beim Befehl mutate() gibt es mir eine Fehlermeldung aus. Warum?
@@ -201,7 +201,7 @@ NRW2023_zeitreihe_Kanton |>
   filter(!is.na(anzahl_gewaehlte_f)) |> 
   group_by(wahl_jahr) |> 
   summarise(sum_anzahl_gewaehlte_f = sum(anzahl_gewaehlte_f)) |>
-  mutate(prozent = gewaehlte_f_prozent(total)) |> 
+  mutate(prozent = gewaehlte_f_prozent(sum_anzahl_gewaehlte_f)) |> 
   gt::gt()
   
 
