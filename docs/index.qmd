@@ -219,15 +219,24 @@ NRW2023_zeitreihe_Kanton |>
 
 ## gerne würde ich hier die Bundesratsparteien plus die beiden Parteien mit Anspruch darauf filtern (SVP, SP, FDP, Mitte, Grüne und GLP), da alle Parteien zusammen zu unübersichtlich werden: filter(partei_bezeichnung_de in %in% c("SVP, "SP"...)) funktioniert aber nicht... Any ideas? :)
 
+partei_bundespartei <- c("FDP", "SVP", "SP", "GRÜNE", "CVP/Mitte", "GLP")
 
 NRW2023_zeitreihe_Kanton |> 
+ mutate(partei_bezeichnung_de = case_when(
+  partei_bezeichnung_de == "CVP" ~ "CVP/Mitte",
+  partei_bezeichnung_de == "Mitte" ~ "CVP/Mitte",
+  .default = partei_bezeichnung_de
+  )) |> 
   filter(kanton_bezeichnung == "Zürich") |> 
+  filter(partei_bezeichnung_de %in% partei_bundespartei) |> 
   # filter(partei_bezeichnung_de == "SVP") |> 
   ggplot(mapping = aes(x = wahl_jahr, 
                        y = frauen_anteil,
                        color = partei_bezeichnung_de)) +
-  geom_point() +
-  geom_line()  
+  geom_point(size = 3) +
+  geom_line(size = 1)  +
+  scale_color_colorblind() +
+  theme_minimal()
 
 # Visualisierung 3.2: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
 ## Vielen Dank für den Vorschlag. Den übernehme ich sehr gerne!
@@ -240,9 +249,6 @@ NRW2023_zeitreihe_Kanton |>
   geom_point() +
   geom_line() +
   facet_wrap(~partei_bezeichnung_de)
-
-
-
 
 
 ```
