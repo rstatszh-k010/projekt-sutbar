@@ -1,0 +1,10 @@
+wahl_jahr,ebene_resultat,kanton_nummer,kanton_bezeichnung,partei_id,partei_bezeichnung_de,partei_staerke,flag_staerkste_partei,anzahl_listen,anzahl_kandidierende,anzahl_kandidierende_f,anzahl_kandidierende_m,anzahl_gewaehlte,anzahl_gewaehlte_f,anzahl_gewaehlte_m,frauen_anteil
+1991,Kanton,1,Zürich,1,FDP,18.660532425,0,2,70,20,50,7,3,4,42.857142857
+1995,Kanton,1,Zürich,1,FDP,18.096397255,0,2,68,23,45,6,3,3,50
+1999,Kanton,1,Zürich,1,FDP,17.819872011,0,2,68,16,52,6,2,4,33.333333333
+2003,Kanton,1,Zürich,1,FDP,16.243032381,0,3,102,34,68,5,1,4,20
+2007,Kanton,1,Zürich,1,FDP,13.15495119,0,3,72,19,53,4,1,3,25
+2011,Kanton,1,Zürich,1,FDP,11.643245998,0,2,68,18,50,4,1,3,25
+2015,Kanton,1,Zürich,1,FDP,15.321626513,0,2,70,24,46,5,2,3,40
+2019,Kanton,1,Zürich,1,FDP,13.660914879,0,2,70,21,49,5,2,3,40
+2023,Kanton,1,Zürich,1,FDP,12.454150984,0,2,72,24,48,5,2,3,40

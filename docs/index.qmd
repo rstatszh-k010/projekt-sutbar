@@ -1,5 +1,5 @@
 ---
-title: "Nationalratswahlen 2023"
+title: "Resultate der Nationalratswahlen von 1991 bis 2023"
 author: "Barbara Sutter"
 format:
   html: 
@@ -28,15 +28,15 @@ read_delim(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX
 
 # Einleitung
 
-Im Rahmen einer kantonalen Weiterbildung des Kantons Zürich - Data Science mit R - wird vertieften Einblick in die Anwendung von R vermittelt. Als Abschlussprojekt des Kurses wird ein OGD-Datensatz verwendet um das vermittelte und gelernte Wissen direkt an einem eigenen Projekt anzuwenden und zu vertiefen.
+Im Rahmen einer Weiterbildung des Kantons Zürich - Data Science mit R - wird vertieften Einblick in die Anwendung von R ermöglicht. Als Abschlussprojekt des Kurses wird ein OGD-Datensatz verwendet um das vermittelte und gelernte Wissen direkt an einem eigenen Projekt anzuwenden und zu vertiefen.
 
-Die in dem vorliegenden Projekt verwendeten Daten stammen von opendata.swiss und werden vom Bundesamt für Statistik zur Verfügung gestellt. Die Daten thematisieren die Nationalratswahlen der Schweiz und wurden am 30. November 2023 letztmals aktualisiert. Die Daten zeigen eine Zeitreihe zu den Listen, den Kandidierenden, der Parteistärke, der Anzahl Mandate, der Anzahl gewählten Frauen und Männern sowie die jeweils stärkste Partei der jeweiligen Nationalratswahlen. Die Daten sind auf Ebene Schweiz sowie auf Ebene der einzelnen Kantone vorhanden und beginnen im Jahr 1991 bis ins Jahr 2023.
+# Daten
+
+Die in dem vorliegenden Projekt verwendeten Daten stammen von opendata.swiss und werden vom Bundesamt für Statistik zur Verfügung gestellt. Die Daten thematisieren die Nationalratswahlen der Schweiz und wurden am 30. November 2023 letztmals aktualisiert. Die Daten zeigen eine Zeitreihe zu den Listen, den Kandidierenden, der Parteistärke, der Anzahl Mandate, diie Anzahl gewählter Frauen und Männern sowie die jeweils stärkste Partei der jeweiligen Nationalratswahlen. Die Daten sind auf Ebene Schweiz sowie auf Ebene der einzelnen Kantone vorhanden und beginnen im Jahr 1991 bis ins Jahr 2023.
 
 Link: [Nationalratswahlen: Zeitreihen zu Listen, Kandidierenden, Parteistärken, Mandaten, gewählten Frauen und Männern, stärkste Partei (Schweiz und Kantone) \| opendata.swiss](https://opendata.swiss/de/dataset/nationalratswahlen-zeitreihen-zu-listen-kandidierenden-parteistarken-mandaten-gewahlten-frauen-)
 
 Ziel der vorliegenden Abschlussarbeit soll sein, mittels den Daten aufzuzeigen, wie sich die Parteienstärken bei den Nationalratswahlen in den letzten gut 30 Jahren verändert haben. Weiter soll ein Fokus auf die Verteilung der Mandate, welche von Frauen besetzt werden, gelegt werden. Dazu stellen sich folgende Fragen: Ist hier eine Verschiebung zu einem höheren Frauenanteil sichtbar? Kann ein Zusammenhang zwischen Parteienstärke, Frauenanteil und Parteizugehörigkeit gezeigt werden?
-
-# Daten
 
 ```{r}
 NRW2023_zeitreihe <- read_delim(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX (1).csv"), delim = ";")
@@ -44,9 +44,11 @@ NRW2023_zeitreihe <- read_delim(here::here("daten/raw/sd-t-17.02-NRW2023-zeitrei
 # view(NRW2023_zeitreihe)
 ```
 
+# Analyse
+
 ## Analyseziele
 
-...
+Ziel der vorliegenden Abschlussarbeit soll sein, mittels den Daten aufzuzeigen, wie sich die Parteienstärken bei den Nationalratswahlen in den letzten gut 30 Jahren verändert haben. Weiter soll ein Fokus auf die Verteilung der Mandate, welche von Frauen besetzt werden, gelegt werden. Dazu stellen sich folgende Fragen: Ist hier eine Verschiebung zu einem höheren Frauenanteil sichtbar? Kann ein Zusammenhang zwischen Parteienstärke, Frauenanteil und Parteizugehörigkeit gezeigt werden?
 
 ## Datenaufbereitung
 
@@ -97,10 +99,27 @@ NRW2023_zeitreihe_Kanton |>
     .default = partei_bezeichnung_de
   ))
 
+write_csv(x = NRW2023_CH_2023,
+          here::here("daten/processed/NRW2023_CH_2023"))
+write_csv(x = NRW2023_CH_2023_total,
+          here::here("daten/processed/NRW2023_CH_2023_total"))
+write_csv(x = NRW2023_zeitreihe,
+          here::here("daten/processed/NRW2023_zeitreihe"))
+write_csv(x = NRW2023_zeitreihe_CH,
+          here::here("daten/processed/NRW2023_zeitreihe_CH"))
+write_csv(x = NRW2023_zeitreihe_d,
+          here::here("daten/processed/NRW2023_zeitreihe_d"))
+write_csv(x = NRW2023_zeitreihe_FDP_Zürich,
+          here::here("daten/processed/NRW2023_zeitreihe_FDP_Zürich"))
+write_csv(x = NRW2023_zeitreihe_Kanton,
+          here::here("daten/processed/NRW2023_zeitreihe_Kanton"))
+
 
 ```
 
-## Daten Visualisierung
+# Ergebnisse
+
+Mittels...
 
 ### 1. Parteienstärke bei den Nationalratswahlen 2023
 
@@ -143,10 +162,10 @@ ggplot(data = NRW2023_CH_2023_total,
       theme_minimal(base_size = 12) +
       theme(panel.grid.major.x = element_blank(),
             axis.text.x = element_text(angle = 90, vjust = 0.5)) +
-      # scale_fill_manual(values = c("blue")) +
+      geom_col(fill = "violet") +
       labs(title = "Parteienstärke bei den Nationalratswahlen 2023",
             y = "Parteienstärke in Prozent",
-            x = "Partei")
+            x = "Partei") 
 ```
 
 ```{r}
@@ -209,49 +228,82 @@ NRW2023_zeitreihe_Kanton |>
 
 3.  Entwicklung Frauen-Anteil in den Parteien und Kantone
 
-```{r}
+    ```{r}
+    # Visualisierung 3.1: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
 
-```
+    ## gerne würde ich hier die Bundesratsparteien plus die beiden Parteien mit Anspruch darauf filtern (SVP, SP, FDP, Mitte, Grüne und GLP), da alle Parteien zusammen zu unübersichtlich werden: filter(partei_bezeichnung_de in %in% c("SVP, "SP"...)) funktioniert aber nicht... Any ideas? :)
 
-```{r}
+    partei_bundespartei <- c("FDP", "SVP", "SP", "GRÜNE", "CVP/Mitte", "GLP")
 
-# Visualisierung 3.1: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
+    NRW2023_zeitreihe_Kanton |> 
+     mutate(partei_bezeichnung_de = case_when(
+      partei_bezeichnung_de == "CVP" ~ "CVP/Mitte",
+      partei_bezeichnung_de == "Mitte" ~ "CVP/Mitte",
+      .default = partei_bezeichnung_de
+      )) |> 
+      filter(kanton_bezeichnung == "Zürich") |> 
+      filter(partei_bezeichnung_de %in% partei_bundespartei) |> 
+      # filter(partei_bezeichnung_de == "SVP") |> 
+      ggplot(mapping = aes(x = wahl_jahr, 
+                           y = frauen_anteil,
+                           color = partei_bezeichnung_de)) +
+      geom_point(size = 3) +
+      geom_line(size = 1)  +
+      scale_color_colorblind() +
+      theme_minimal()
 
-## gerne würde ich hier die Bundesratsparteien plus die beiden Parteien mit Anspruch darauf filtern (SVP, SP, FDP, Mitte, Grüne und GLP), da alle Parteien zusammen zu unübersichtlich werden: filter(partei_bezeichnung_de in %in% c("SVP, "SP"...)) funktioniert aber nicht... Any ideas? :)
+    # Visualisierung 3.2: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
+    ## Vielen Dank für den Vorschlag. Den übernehme ich sehr gerne!
 
-partei_bundespartei <- c("FDP", "SVP", "SP", "GRÜNE", "CVP/Mitte", "GLP")
+    NRW2023_zeitreihe_Kanton |> 
+      filter(kanton_bezeichnung == "Zürich") |> 
+      # filter(partei_bezeichnung_de == "SVP") |> 
+      ggplot(mapping = aes(x = wahl_jahr, 
+                           y = frauen_anteil)) +
+      geom_point() +
+      geom_line() +
+      facet_wrap(~partei_bezeichnung_de)
+    ```
 
-NRW2023_zeitreihe_Kanton |> 
- mutate(partei_bezeichnung_de = case_when(
-  partei_bezeichnung_de == "CVP" ~ "CVP/Mitte",
-  partei_bezeichnung_de == "Mitte" ~ "CVP/Mitte",
-  .default = partei_bezeichnung_de
-  )) |> 
-  filter(kanton_bezeichnung == "Zürich") |> 
-  filter(partei_bezeichnung_de %in% partei_bundespartei) |> 
-  # filter(partei_bezeichnung_de == "SVP") |> 
-  ggplot(mapping = aes(x = wahl_jahr, 
-                       y = frauen_anteil,
-                       color = partei_bezeichnung_de)) +
-  geom_point(size = 3) +
-  geom_line(size = 1)  +
-  scale_color_colorblind() +
-  theme_minimal()
+    fgdfdf
 
-# Visualisierung 3.2: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
-## Vielen Dank für den Vorschlag. Den übernehme ich sehr gerne!
+    ```{r}
+    # Visualisierung 3.1: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
 
-NRW2023_zeitreihe_Kanton |> 
-  filter(kanton_bezeichnung == "Zürich") |> 
-  # filter(partei_bezeichnung_de == "SVP") |> 
-  ggplot(mapping = aes(x = wahl_jahr, 
-                       y = frauen_anteil)) +
-  geom_point() +
-  geom_line() +
-  facet_wrap(~partei_bezeichnung_de)
+    ## gerne würde ich hier die Bundesratsparteien plus die beiden Parteien mit Anspruch darauf filtern (SVP, SP, FDP, Mitte, Grüne und GLP), da alle Parteien zusammen zu unübersichtlich werden: filter(partei_bezeichnung_de in %in% c("SVP, "SP"...)) funktioniert aber nicht... Any ideas? :)
+
+    partei_bundespartei <- c("FDP", "SVP", "SP", "GRÜNE", "CVP/Mitte", "GLP")
+
+    NRW2023_zeitreihe_Kanton |> 
+     mutate(partei_bezeichnung_de = case_when(
+      partei_bezeichnung_de == "CVP" ~ "CVP/Mitte",
+      partei_bezeichnung_de == "Mitte" ~ "CVP/Mitte",
+      .default = partei_bezeichnung_de
+      )) |> 
+      filter(kanton_bezeichnung == "Zürich") |> 
+      filter(partei_bezeichnung_de %in% partei_bundespartei) |> 
+      # filter(partei_bezeichnung_de == "SVP") |> 
+      ggplot(mapping = aes(x = wahl_jahr, 
+                           y = frauen_anteil,
+                           color = partei_bezeichnung_de)) +
+      geom_point(size = 3) +
+      geom_line(size = 1)  +
+      scale_color_colorblind() +
+      theme_minimal()
+
+    # Visualisierung 3.2: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
 
 
-```
+    NRW2023_zeitreihe_Kanton |> 
+      filter(kanton_bezeichnung == "Zürich") |> 
+      # filter(partei_bezeichnung_de == "SVP") |> 
+      ggplot(mapping = aes(x = wahl_jahr, 
+                           y = frauen_anteil)) +
+      geom_point() +
+      geom_line() +
+      facet_wrap(~partei_bezeichnung_de)
+
+    ```
 
 ### 4. Direktvergleich der Parteienstärke im Kanton Zürich
 
@@ -296,3 +348,7 @@ ggplot(data = NRW2023_zeitreihe_FDP_Zürich,
                      y = partei_staerke)) +
       geom_line()
 ```
+
+# Schlussfolgerungen
+
+dfgsdfgdfg
