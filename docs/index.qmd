@@ -189,10 +189,10 @@ NRW2023_zeitreihe_Kanton |>
   select(wahl_jahr, frauen_anteil, anzahl_gewaehlte_f) |> 
   filter(!is.na(anzahl_gewaehlte_f)) |> 
   group_by(wahl_jahr) |> 
-  summarise(sum_anzahl_gewaehlte_f = sum(anzahl_gewaehlte_f)) |> 
+  summarise(sum_anzahl_gewaehlte_f = sum(anzahl_gewaehlte_f)) 
   
-gewaehlte_f_prozent <- function(sum_anzahl_gewaehlte_f) {
-  round(sum_anzahl_gewaehlte_f / sum(anzahl_gewaehlte, na.rm = TRUE) * 100, 1)
+gewaehlte_f_prozent <- function(x) {
+  round(x / sum(x, na.rm = TRUE) * 100, 1)
 }
   
 # Nun habe ich die Prozentwerte mittels einer function(x) definiert. Gerne würde ich  eine schöne Tabelle machen mit den Werten: wahl_jahr, sum_anzahl_gewaehlte_f, gewaehlte_f_prozent. Aber beim Befehl mutate() gibt es mir eine Fehlermeldung aus. Warum?
@@ -201,7 +201,7 @@ NRW2023_zeitreihe_Kanton |>
   filter(!is.na(anzahl_gewaehlte_f)) |> 
   group_by(wahl_jahr) |> 
   summarise(sum_anzahl_gewaehlte_f = sum(anzahl_gewaehlte_f)) |>
-  mutate(prozent = gewaehlte_f_prozent(total)) |> 
+  mutate(prozent = gewaehlte_f_prozent(sum_anzahl_gewaehlte_f)) |> 
   gt::gt()
   
 
@@ -219,15 +219,24 @@ NRW2023_zeitreihe_Kanton |>
 
 ## gerne würde ich hier die Bundesratsparteien plus die beiden Parteien mit Anspruch darauf filtern (SVP, SP, FDP, Mitte, Grüne und GLP), da alle Parteien zusammen zu unübersichtlich werden: filter(partei_bezeichnung_de in %in% c("SVP, "SP"...)) funktioniert aber nicht... Any ideas? :)
 
+partei_bundespartei <- c("FDP", "SVP", "SP", "GRÜNE", "CVP/Mitte", "GLP")
 
 NRW2023_zeitreihe_Kanton |> 
+ mutate(partei_bezeichnung_de = case_when(
+  partei_bezeichnung_de == "CVP" ~ "CVP/Mitte",
+  partei_bezeichnung_de == "Mitte" ~ "CVP/Mitte",
+  .default = partei_bezeichnung_de
+  )) |> 
   filter(kanton_bezeichnung == "Zürich") |> 
+  filter(partei_bezeichnung_de %in% partei_bundespartei) |> 
   # filter(partei_bezeichnung_de == "SVP") |> 
   ggplot(mapping = aes(x = wahl_jahr, 
                        y = frauen_anteil,
                        color = partei_bezeichnung_de)) +
-  geom_point() +
-  geom_line()  
+  geom_point(size = 3) +
+  geom_line(size = 1)  +
+  scale_color_colorblind() +
+  theme_minimal()
 
 # Visualisierung 3.2: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
 ## Vielen Dank für den Vorschlag. Den übernehme ich sehr gerne!
@@ -240,9 +249,6 @@ NRW2023_zeitreihe_Kanton |>
   geom_point() +
   geom_line() +
   facet_wrap(~partei_bezeichnung_de)
-
-
-
 
 
 ```
