@@ -1,1 +1,22 @@
 variable_name;beschreibung
+wahl_jahr;Das Jahr, in dem die Wahl stattgefunden hat
+ebene_resultat;Die Ebene, auf der das Wahlergebnis erfasst wird( z.B. Schweiz, Kantone)
+geoLevelName;Die spezifische Ebene, auf der das Wahlergebnis erfasst wird (z.B. Schweiz, Zürich, Bern,..)
+kanton_nummer;Die eindeutige Nummer, die jedem Kanton in der Schweiz zugeordnet ist
+kanton_bezeichnung;Der Name des Kanton, der in der Wahl beteiligt ist
+partei_id;Die eindeutige Identifikationsnummer der politischen Partei
+partei_bezeichnung_de;Die Abkürzung des Parteinamens auf Deutsch
+partei_bezeichnung_fr;Die Abkürzung des Parteinamens auf Französisch
+partei_bezeichnung_it;Die Abkürzung des Parteinamens auf Italienisch
+partei_bezeichnung_en;Die Abkürzung des Parteinamens auf Englisch
+partei_staerke;Die effektive Parteienstärke aufgrund der Wahlresultate
+flag_staerkste_partei;Eine Dummy-Variable (1 = stärkste Partei bei den Wahlen, 0 = nicht stärkste Partei)
+anzahl_listen;Anzahl Listen, welche bei den Wahlen eingereicht wurden
+anzahl_kandidierende;Das Total der Anzahl Kandidierende bei den Nationalratswahlen
+anzahl_kandidierende_f;Das Total der Anzahl weiblicher Kandidierenden bei den Nationalratswahlen
+anzahl_kandidierende_m;Das Total der Anzahl männlicher Kandidierenden bei den Nationalratswahlen
+anzahl_gewaehlte;Das Total der Anzahl Gewählten bei den Nationalratswahlen
+anzahl_gewaehlte_f;Das Total der Anzahl weiblichen Gewählten bei den Nationalratswahlen
+anzahl_gewaehlte_m;Das Total der Anzahl männlichen Gewählten bei den Nationalratswahlen
+frauen_anteil;Der Anteil der Frauen, welche an den Nationalratswahlen teilgenommen haben
+
