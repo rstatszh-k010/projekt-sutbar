@@ -185,7 +185,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="einleitung" class="level1">
 <h1>Einleitung</h1>
-<p>Im Rahmen einer Weiterbildung des Kantons Zürich - Data Science mit R - wird vertieften Einblick in die Anwendung von R ermöglicht. Als Abschlussprojekt des Kurses wird ein OGD-Datensatz verwendet um den vermittelten Einblick direkt an einem eigenen Projekt anzuwenden und zu vertiefen.</p>
+<p>Im Rahmen einer Weiterbildung des Kantons Zürich - Data Science mit R - wird vertieften Einblick in die Anwendung von R ermöglicht. Als Abschlussprojekt des Kurses wird ein OGD-Datensatz verwendet. Somit soll der gewonnene Einblick direkt an einem eigenen Projekt angewendet und vertieft werden.</p>
 </section>
 <section id="daten" class="level1">
 <h1>Daten</h1>
@@ -328,10 +328,9 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
 <p>Mittels Visualisierungen und Tabellen sollen die oben erwähnten Fragen beantwortet werden.</p>
 <section id="parteienstärke-bei-den-nationalratswahlen-2023" class="level3">
 <h3 class="anchored" data-anchor-id="parteienstärke-bei-den-nationalratswahlen-2023">1. Parteienstärke bei den Nationalratswahlen 2023</h3>
+<p>Die Daten aus dem Wahljahr 2023 werden betrachtet und visualisiert</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Die Daten aus dem Wahljahr 2023 werden betrachtet und visualisiert:</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>NRW2023_CH_2023</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>NRW2023_CH_2023</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 17 × 16
    wahl_jahr ebene_resultat kanton_nummer kanton_bezeichnung partei_id
@@ -359,39 +358,38 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
 #   anzahl_kandidierende_m &lt;dbl&gt;, anzahl_gewaehlte &lt;dbl&gt;,
 #   anzahl_gewaehlte_f &lt;dbl&gt;, anzahl_gewaehlte_m &lt;dbl&gt;, frauen_anteil &lt;dbl&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisierung 1:</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Bei der folgenden Tabelle werden die Parteienstärke bei den Wahlen 2023 abgebildet. Die stärkste Partei ist klar die SVP, gefolgt von der SP, danach positioniert sich die FDP knapp vor der Mitte.</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>NRW2023_CH_2023 <span class="sc">|&gt;</span> </span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(partei_bezeichnung_de, partei_staerke) <span class="sc">|&gt;</span> </span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>()  <span class="sc">|&gt;</span> </span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_header</span>(</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Parteienstärke"</span>,</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Nationalratswahlen 2023"</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">cols_label</span>(</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">partei_bezeichnung_de =</span> <span class="st">"Partei"</span>,</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">partei_staerke =</span> <span class="st">"Parteienstärke"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In der <strong>?@tbl-Tabelle-1</strong> werden die Parteienstärke bei den Wahlen 2023 abgebildet. Die stärkste Partei ist klar die SVP, gefolgt von der SP, danach positioniert sich die FDP knapp vor der Mitte.</p>
+<div class="cell" data-tbl-cap="Tabelle 1">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>NRW2023_CH_2023 <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(partei_bezeichnung_de, partei_staerke) <span class="sc">|&gt;</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>()  <span class="sc">|&gt;</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_header</span>(</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Parteienstärke"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Nationalratswahlen 2023"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># caption = "opendata.swiss"</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">cols_label</span>(</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">partei_bezeichnung_de =</span> <span class="st">"Partei"</span>,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">partei_staerke =</span> <span class="st">"Parteienstärke"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="qvpjpahctk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qvpjpahctk table {
+<div id="ldindtwfit" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ldindtwfit table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qvpjpahctk thead, #qvpjpahctk tbody, #qvpjpahctk tfoot, #qvpjpahctk tr, #qvpjpahctk td, #qvpjpahctk th {
+#ldindtwfit thead, #ldindtwfit tbody, #ldindtwfit tfoot, #ldindtwfit tr, #ldindtwfit td, #ldindtwfit th {
   border-style: none;
 }
 
-#qvpjpahctk p {
+#ldindtwfit p {
   margin: 0;
   padding: 0;
 }
 
-#qvpjpahctk .gt_table {
+#ldindtwfit .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -417,12 +415,12 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-left-color: #D3D3D3;
 }
 
-#qvpjpahctk .gt_caption {
+#ldindtwfit .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qvpjpahctk .gt_title {
+#ldindtwfit .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -434,7 +432,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-bottom-width: 0;
 }
 
-#qvpjpahctk .gt_subtitle {
+#ldindtwfit .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -446,7 +444,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-top-width: 0;
 }
 
-#qvpjpahctk .gt_heading {
+#ldindtwfit .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -458,13 +456,13 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-right-color: #D3D3D3;
 }
 
-#qvpjpahctk .gt_bottom_border {
+#ldindtwfit .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qvpjpahctk .gt_col_headings {
+#ldindtwfit .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -479,7 +477,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-right-color: #D3D3D3;
 }
 
-#qvpjpahctk .gt_col_heading {
+#ldindtwfit .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -499,7 +497,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   overflow-x: hidden;
 }
 
-#qvpjpahctk .gt_column_spanner_outer {
+#ldindtwfit .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -511,15 +509,15 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   padding-right: 4px;
 }
 
-#qvpjpahctk .gt_column_spanner_outer:first-child {
+#ldindtwfit .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qvpjpahctk .gt_column_spanner_outer:last-child {
+#ldindtwfit .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qvpjpahctk .gt_column_spanner {
+#ldindtwfit .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -531,11 +529,11 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   width: 100%;
 }
 
-#qvpjpahctk .gt_spanner_row {
+#ldindtwfit .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qvpjpahctk .gt_group_heading {
+#ldindtwfit .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -561,7 +559,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   text-align: left;
 }
 
-#qvpjpahctk .gt_empty_group_heading {
+#ldindtwfit .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -576,15 +574,15 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   vertical-align: middle;
 }
 
-#qvpjpahctk .gt_from_md > :first-child {
+#ldindtwfit .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qvpjpahctk .gt_from_md > :last-child {
+#ldindtwfit .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qvpjpahctk .gt_row {
+#ldindtwfit .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -603,7 +601,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   overflow-x: hidden;
 }
 
-#qvpjpahctk .gt_stub {
+#ldindtwfit .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -616,7 +614,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   padding-right: 5px;
 }
 
-#qvpjpahctk .gt_stub_row_group {
+#ldindtwfit .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -630,15 +628,15 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   vertical-align: top;
 }
 
-#qvpjpahctk .gt_row_group_first td {
+#ldindtwfit .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qvpjpahctk .gt_row_group_first th {
+#ldindtwfit .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qvpjpahctk .gt_summary_row {
+#ldindtwfit .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -648,16 +646,16 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   padding-right: 5px;
 }
 
-#qvpjpahctk .gt_first_summary_row {
+#ldindtwfit .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qvpjpahctk .gt_first_summary_row.thick {
+#ldindtwfit .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qvpjpahctk .gt_last_summary_row {
+#ldindtwfit .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -667,7 +665,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-bottom-color: #D3D3D3;
 }
 
-#qvpjpahctk .gt_grand_summary_row {
+#ldindtwfit .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -677,7 +675,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   padding-right: 5px;
 }
 
-#qvpjpahctk .gt_first_grand_summary_row {
+#ldindtwfit .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -687,7 +685,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-top-color: #D3D3D3;
 }
 
-#qvpjpahctk .gt_last_grand_summary_row_top {
+#ldindtwfit .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -697,11 +695,11 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-bottom-color: #D3D3D3;
 }
 
-#qvpjpahctk .gt_striped {
+#ldindtwfit .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qvpjpahctk .gt_table_body {
+#ldindtwfit .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -710,7 +708,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-bottom-color: #D3D3D3;
 }
 
-#qvpjpahctk .gt_footnotes {
+#ldindtwfit .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -724,7 +722,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-right-color: #D3D3D3;
 }
 
-#qvpjpahctk .gt_footnote {
+#ldindtwfit .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -733,7 +731,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   padding-right: 5px;
 }
 
-#qvpjpahctk .gt_sourcenotes {
+#ldindtwfit .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -747,7 +745,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-right-color: #D3D3D3;
 }
 
-#qvpjpahctk .gt_sourcenote {
+#ldindtwfit .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -755,77 +753,78 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   padding-right: 5px;
 }
 
-#qvpjpahctk .gt_left {
+#ldindtwfit .gt_left {
   text-align: left;
 }
 
-#qvpjpahctk .gt_center {
+#ldindtwfit .gt_center {
   text-align: center;
 }
 
-#qvpjpahctk .gt_right {
+#ldindtwfit .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qvpjpahctk .gt_font_normal {
+#ldindtwfit .gt_font_normal {
   font-weight: normal;
 }
 
-#qvpjpahctk .gt_font_bold {
+#ldindtwfit .gt_font_bold {
   font-weight: bold;
 }
 
-#qvpjpahctk .gt_font_italic {
+#ldindtwfit .gt_font_italic {
   font-style: italic;
 }
 
-#qvpjpahctk .gt_super {
+#ldindtwfit .gt_super {
   font-size: 65%;
 }
 
-#qvpjpahctk .gt_footnote_marks {
+#ldindtwfit .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qvpjpahctk .gt_asterisk {
+#ldindtwfit .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qvpjpahctk .gt_indent_1 {
+#ldindtwfit .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qvpjpahctk .gt_indent_2 {
+#ldindtwfit .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qvpjpahctk .gt_indent_3 {
+#ldindtwfit .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qvpjpahctk .gt_indent_4 {
+#ldindtwfit .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qvpjpahctk .gt_indent_5 {
+#ldindtwfit .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qvpjpahctk .katex-display {
+#ldindtwfit .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qvpjpahctk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ldindtwfit div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<caption>Tabelle 1</caption>
 <thead>
 <tr class="gt_heading header">
 <th colspan="2" class="gt_heading gt_title gt_font_normal">Parteienstärke</th>
@@ -930,7 +929,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
 <span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">frauen_anteil =</span> <span class="fu">replace_na</span>(frauen_anteil, <span class="dv">0</span>))</span>
 <span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Es wird eine Visualisierung erstellt, bei welcher man die Verteilung der Parteien nach Parteienstärke auf einen Blick sieht</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisierung zur Verteilung der Parteien nach Parteienstärke</span></span>
 <span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> NRW2023_CH_2023_total,</span>
 <span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span> (<span class="at">y =</span> partei_staerke,</span>
@@ -950,7 +949,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/tab-Tabelle-1-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -959,38 +958,35 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
 <section id="direktvergleich-der-parteienstärke-im-kanton-zürich" class="level3">
 <h3 class="anchored" data-anchor-id="direktvergleich-der-parteienstärke-im-kanton-zürich">2. Direktvergleich der Parteienstärke im Kanton Zürich</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisierung 2:</span></span>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Direktvergleich der Parteienstärke der letzten neun Nationalratswahlen anhand der fünf grössten Parteien im Kanton Zürich</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Direktvergleich der Parteienstärke der letzten neun Nationalratswahlen der fünf grössten Parteien im Kanton Zürich</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>partei_fuenf_groesste <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"FDP"</span>, <span class="st">"SVP"</span>, <span class="st">"SP"</span>, <span class="st">"GRÜNE"</span>, <span class="st">"CVP/Mitte"</span>)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>NRW2023_zeitreihe_Kanton <span class="sc">|&gt;</span> </span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">partei_bezeichnung_de =</span> <span class="fu">case_when</span>(</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  partei_bezeichnung_de <span class="sc">==</span> <span class="st">"CVP"</span> <span class="sc">~</span> <span class="st">"CVP/Mitte"</span>,</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  partei_bezeichnung_de <span class="sc">==</span> <span class="st">"Mitte"</span> <span class="sc">~</span> <span class="st">"CVP/Mitte"</span>,</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">.default =</span> partei_bezeichnung_de</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(kanton_bezeichnung <span class="sc">==</span> <span class="st">"Zürich"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># CVP und BDP haben NA für 2023. CVP weil sie umbenannt wurde. BDP ist hier nicht </span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># relevant. Deshalb herausgefiltert.</span></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(partei_staerke)) <span class="sc">|&gt;</span> </span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(partei_bezeichnung_de <span class="sc">%in%</span> partei_fuenf_groesste) <span class="sc">|&gt;</span> </span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> wahl_jahr, </span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> partei_staerke,</span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> partei_bezeichnung_de)) <span class="sc">+</span></span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Parteienstärke im Kanton Zürich"</span>,</span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="st">"Parteienstärke"</span>,</span>
-<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">x =</span> <span class="st">"Wahljahr"</span>,</span>
-<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"Partei"</span>,</span>
-<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">caption =</span> <span class="st">"opendata.swiss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>partei_fuenf_groesste <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"FDP"</span>, <span class="st">"SVP"</span>, <span class="st">"SP"</span>, <span class="st">"GRÜNE"</span>, <span class="st">"CVP/Mitte"</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>NRW2023_zeitreihe_Kanton <span class="sc">|&gt;</span> </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">partei_bezeichnung_de =</span> <span class="fu">case_when</span>(</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  partei_bezeichnung_de <span class="sc">==</span> <span class="st">"CVP"</span> <span class="sc">~</span> <span class="st">"CVP/Mitte"</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  partei_bezeichnung_de <span class="sc">==</span> <span class="st">"Mitte"</span> <span class="sc">~</span> <span class="st">"CVP/Mitte"</span>,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">.default =</span> partei_bezeichnung_de</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(kanton_bezeichnung <span class="sc">==</span> <span class="st">"Zürich"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># CVP und BDP haben NA für 2023. CVP weil sie umbenannt wurde. BDP ist hier nicht </span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># relevant. Deshalb herausgefiltert.</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(partei_staerke)) <span class="sc">|&gt;</span> </span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(partei_bezeichnung_de <span class="sc">%in%</span> partei_fuenf_groesste) <span class="sc">|&gt;</span> </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> wahl_jahr, </span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> partei_staerke,</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> partei_bezeichnung_de)) <span class="sc">+</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Parteienstärke im Kanton Zürich"</span>,</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="st">"Parteienstärke"</span>,</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">x =</span> <span class="st">"Wahljahr"</span>,</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"Partei"</span>,</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">caption =</span> <span class="st">"opendata.swiss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -999,7 +995,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
 <section id="anzahl-gewählte-frauen" class="level3">
 <h3 class="anchored" data-anchor-id="anzahl-gewählte-frauen">3. Anzahl gewählte Frauen</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisierung 3: Summe Anzahl gewählter Frauen über alle Kantone und Parteien.</span></span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summe der Anzahl gewählter Frauen aller Kantone und Parteien</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>NRW2023_zeitreihe_Kanton <span class="sc">|&gt;</span> </span>
@@ -1010,25 +1006,26 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
 <span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wahl_jahr,</span>
 <span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> sum_anzahl_gewaehlte_f)) <span class="sc">+</span></span>
 <span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(sum_anzahl_gewaehlte_f, <span class="dv">1</span>))),</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.85</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Entwicklung der Anzahl gewählter Frauen bei Nationalratswahlen"</span>,</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="st">"Summe aller gewählten Frauen"</span>,</span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">x =</span> <span class="st">"Wahljahr"</span>,</span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>           <span class="at">caption =</span> <span class="st">"opendata.swiss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1991</span>, <span class="dv">2023</span>, <span class="at">by =</span> <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(sum_anzahl_gewaehlte_f, <span class="dv">1</span>))),</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.85</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Entwicklung der Anzahl gewählter Frauen bei Nationalratswahlen"</span>,</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="st">"Summe aller gewählten Frauen"</span>,</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">x =</span> <span class="st">"Wahljahr"</span>,</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>           <span class="at">caption =</span> <span class="st">"opendata.swiss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabelle xy: Anzahl gewählte Frauen (mit gt und einer function(x)):</span></span>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Anzahl gewählte Frauen (mit gt und einer function(x)):</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>NRW2023_zeitreihe_Kanton <span class="sc">|&gt;</span> </span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(wahl_jahr, frauen_anteil, anzahl_gewaehlte_f) <span class="sc">|&gt;</span> </span>
@@ -1070,23 +1067,23 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
 <span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">prozent =</span> <span class="st">"Prozent"</span></span>
 <span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="zexzfvlvkl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zexzfvlvkl table {
+<div id="xfsnemukyf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xfsnemukyf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zexzfvlvkl thead, #zexzfvlvkl tbody, #zexzfvlvkl tfoot, #zexzfvlvkl tr, #zexzfvlvkl td, #zexzfvlvkl th {
+#xfsnemukyf thead, #xfsnemukyf tbody, #xfsnemukyf tfoot, #xfsnemukyf tr, #xfsnemukyf td, #xfsnemukyf th {
   border-style: none;
 }
 
-#zexzfvlvkl p {
+#xfsnemukyf p {
   margin: 0;
   padding: 0;
 }
 
-#zexzfvlvkl .gt_table {
+#xfsnemukyf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1112,12 +1109,12 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-left-color: #D3D3D3;
 }
 
-#zexzfvlvkl .gt_caption {
+#xfsnemukyf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zexzfvlvkl .gt_title {
+#xfsnemukyf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1129,7 +1126,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-bottom-width: 0;
 }
 
-#zexzfvlvkl .gt_subtitle {
+#xfsnemukyf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1141,7 +1138,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-top-width: 0;
 }
 
-#zexzfvlvkl .gt_heading {
+#xfsnemukyf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1153,13 +1150,13 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-right-color: #D3D3D3;
 }
 
-#zexzfvlvkl .gt_bottom_border {
+#xfsnemukyf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zexzfvlvkl .gt_col_headings {
+#xfsnemukyf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1174,7 +1171,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-right-color: #D3D3D3;
 }
 
-#zexzfvlvkl .gt_col_heading {
+#xfsnemukyf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1194,7 +1191,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   overflow-x: hidden;
 }
 
-#zexzfvlvkl .gt_column_spanner_outer {
+#xfsnemukyf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1206,15 +1203,15 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   padding-right: 4px;
 }
 
-#zexzfvlvkl .gt_column_spanner_outer:first-child {
+#xfsnemukyf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zexzfvlvkl .gt_column_spanner_outer:last-child {
+#xfsnemukyf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zexzfvlvkl .gt_column_spanner {
+#xfsnemukyf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1226,11 +1223,11 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   width: 100%;
 }
 
-#zexzfvlvkl .gt_spanner_row {
+#xfsnemukyf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zexzfvlvkl .gt_group_heading {
+#xfsnemukyf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1256,7 +1253,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   text-align: left;
 }
 
-#zexzfvlvkl .gt_empty_group_heading {
+#xfsnemukyf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1271,15 +1268,15 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   vertical-align: middle;
 }
 
-#zexzfvlvkl .gt_from_md > :first-child {
+#xfsnemukyf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zexzfvlvkl .gt_from_md > :last-child {
+#xfsnemukyf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zexzfvlvkl .gt_row {
+#xfsnemukyf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1298,7 +1295,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   overflow-x: hidden;
 }
 
-#zexzfvlvkl .gt_stub {
+#xfsnemukyf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1311,7 +1308,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   padding-right: 5px;
 }
 
-#zexzfvlvkl .gt_stub_row_group {
+#xfsnemukyf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1325,15 +1322,15 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   vertical-align: top;
 }
 
-#zexzfvlvkl .gt_row_group_first td {
+#xfsnemukyf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zexzfvlvkl .gt_row_group_first th {
+#xfsnemukyf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zexzfvlvkl .gt_summary_row {
+#xfsnemukyf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1343,16 +1340,16 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   padding-right: 5px;
 }
 
-#zexzfvlvkl .gt_first_summary_row {
+#xfsnemukyf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zexzfvlvkl .gt_first_summary_row.thick {
+#xfsnemukyf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zexzfvlvkl .gt_last_summary_row {
+#xfsnemukyf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1362,7 +1359,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-bottom-color: #D3D3D3;
 }
 
-#zexzfvlvkl .gt_grand_summary_row {
+#xfsnemukyf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1372,7 +1369,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   padding-right: 5px;
 }
 
-#zexzfvlvkl .gt_first_grand_summary_row {
+#xfsnemukyf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1382,7 +1379,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-top-color: #D3D3D3;
 }
 
-#zexzfvlvkl .gt_last_grand_summary_row_top {
+#xfsnemukyf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1392,11 +1389,11 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-bottom-color: #D3D3D3;
 }
 
-#zexzfvlvkl .gt_striped {
+#xfsnemukyf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zexzfvlvkl .gt_table_body {
+#xfsnemukyf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1405,7 +1402,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-bottom-color: #D3D3D3;
 }
 
-#zexzfvlvkl .gt_footnotes {
+#xfsnemukyf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1419,7 +1416,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-right-color: #D3D3D3;
 }
 
-#zexzfvlvkl .gt_footnote {
+#xfsnemukyf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1428,7 +1425,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   padding-right: 5px;
 }
 
-#zexzfvlvkl .gt_sourcenotes {
+#xfsnemukyf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1442,7 +1439,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   border-right-color: #D3D3D3;
 }
 
-#zexzfvlvkl .gt_sourcenote {
+#xfsnemukyf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1450,72 +1447,72 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
   padding-right: 5px;
 }
 
-#zexzfvlvkl .gt_left {
+#xfsnemukyf .gt_left {
   text-align: left;
 }
 
-#zexzfvlvkl .gt_center {
+#xfsnemukyf .gt_center {
   text-align: center;
 }
 
-#zexzfvlvkl .gt_right {
+#xfsnemukyf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zexzfvlvkl .gt_font_normal {
+#xfsnemukyf .gt_font_normal {
   font-weight: normal;
 }
 
-#zexzfvlvkl .gt_font_bold {
+#xfsnemukyf .gt_font_bold {
   font-weight: bold;
 }
 
-#zexzfvlvkl .gt_font_italic {
+#xfsnemukyf .gt_font_italic {
   font-style: italic;
 }
 
-#zexzfvlvkl .gt_super {
+#xfsnemukyf .gt_super {
   font-size: 65%;
 }
 
-#zexzfvlvkl .gt_footnote_marks {
+#xfsnemukyf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zexzfvlvkl .gt_asterisk {
+#xfsnemukyf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zexzfvlvkl .gt_indent_1 {
+#xfsnemukyf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zexzfvlvkl .gt_indent_2 {
+#xfsnemukyf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zexzfvlvkl .gt_indent_3 {
+#xfsnemukyf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zexzfvlvkl .gt_indent_4 {
+#xfsnemukyf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zexzfvlvkl .gt_indent_5 {
+#xfsnemukyf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zexzfvlvkl .katex-display {
+#xfsnemukyf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zexzfvlvkl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xfsnemukyf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1590,7 +1587,7 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
 <section id="entwicklung-frauen-anteil-in-den-parteien-und-kantone" class="level3">
 <h3 class="anchored" data-anchor-id="entwicklung-frauen-anteil-in-den-parteien-und-kantone">4. Entwicklung Frauen-Anteil in den Parteien und Kantone</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisierung 4.1: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei</span></span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Entwicklung des Frauen-Anteils auf nationaler Ebene für die Bundesratsparteien plus die Grünen und die GLP</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>partei_bundespartei <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"FDP"</span>, <span class="st">"SVP"</span>, <span class="st">"SP"</span>, <span class="st">"GRÜNE"</span>, <span class="st">"CVP/Mitte"</span>, <span class="st">"GLP"</span>)</span>
@@ -1620,11 +1617,11 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># und für den Kanton Zürich:</span></span>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Entwicklung des Frauen-Anteils der Bundesratsparteien plus die Grünen und die GLP im Kanton Zürich:</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>NRW2023_zeitreihe_Kanton <span class="sc">|&gt;</span> </span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">partei_bezeichnung_de =</span> <span class="fu">case_when</span>(</span>
@@ -1643,14 +1640,14 @@ $ frauen_anteil          &lt;dbl&gt; 11.36364, 11.42857, 29.26829, 12.00000, 10.
 <span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
 <span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Frauenanteil im Kanton Zürich"</span>,</span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="st">"Frauenanteil"</span>,</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="st">"Frauenanteil in Prozent"</span>,</span>
 <span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">x =</span> <span class="st">"Wahljahr"</span>,</span>
 <span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"Partei"</span>,</span>
 <span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">caption =</span> <span class="st">"opendata.swiss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

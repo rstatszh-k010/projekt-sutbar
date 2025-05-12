@@ -29,7 +29,7 @@ read_delim(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX
 
 # Einleitung
 
-Im Rahmen einer Weiterbildung des Kantons Zürich - Data Science mit R - wird vertieften Einblick in die Anwendung von R ermöglicht. Als Abschlussprojekt des Kurses wird ein OGD-Datensatz verwendet um den gewonnen Einblick direkt an einem eigenen Projekt anzuwenden und zu vertiefen.
+Im Rahmen einer Weiterbildung des Kantons Zürich - Data Science mit R - wird vertieften Einblick in die Anwendung von R ermöglicht. Als Abschlussprojekt des Kurses wird ein OGD-Datensatz verwendet. Somit soll der gewonnene Einblick direkt an einem eigenen Projekt angewendet und vertieft werden.
 
 # Daten
 
@@ -107,23 +107,26 @@ Mittels Visualisierungen und Tabellen sollen die oben erwähnten Fragen beantwor
 
 ### 1. Parteienstärke bei den Nationalratswahlen 2023
 
+Die Daten aus dem Wahljahr 2023 werden betrachtet und visualisiert
+
 ```{r}
-# Die Daten aus dem Wahljahr 2023 werden betrachtet und visualisiert:
-
 NRW2023_CH_2023
+```
 
-# Visualisierung 1:
+In der @tbl-Tabelle-1 werden die Parteienstärke bei den Wahlen 2023 abgebildet. Die stärkste Partei ist klar die SVP, gefolgt von der SP, danach positioniert sich die FDP knapp vor der Mitte.
 
-# Bei der folgenden Tabelle werden die Parteienstärke bei den Wahlen 2023 abgebildet. Die stärkste Partei ist klar die SVP, gefolgt von der SP, danach positioniert sich die FDP knapp vor der Mitte.
-
+```{r}
+#| label: tab-Tabelle-1
+#| tbl-cap: "Tabelle 1"
 
 NRW2023_CH_2023 |> 
   select(partei_bezeichnung_de, partei_staerke) |> 
   gt::gt()  |> 
   gt::tab_header(
     title = "Parteienstärke",
-    subtitle = "Nationalratswahlen 2023"
-  ) |>
+    subtitle = "Nationalratswahlen 2023",
+    # caption = "opendata.swiss"
+    ) |>
   gt::cols_label(
     partei_bezeichnung_de = "Partei",
     partei_staerke = "Parteienstärke")
@@ -146,7 +149,7 @@ NRW2023_CH_2023_total <- NRW2023_CH_2023 |>
          frauen_anteil = replace_na(frauen_anteil, 0))
 
 
-# Es wird eine Visualisierung erstellt, bei welcher man die Verteilung der Parteien nach Parteienstärke auf einen Blick sieht
+# Visualisierung zur Verteilung der Parteien nach Parteienstärke
 
 ggplot(data = NRW2023_CH_2023_total,
        mapping = aes (y = partei_staerke,
@@ -168,11 +171,8 @@ ggplot(data = NRW2023_CH_2023_total,
 ### 2. Direktvergleich der Parteienstärke im Kanton Zürich
 
 ```{r}
-  
-# Visualisierung 2:
 
-
-# Direktvergleich der Parteienstärke der letzten neun Nationalratswahlen der fünf grössten Parteien im Kanton Zürich
+# Direktvergleich der Parteienstärke der letzten neun Nationalratswahlen anhand der fünf grössten Parteien im Kanton Zürich
 
 partei_fuenf_groesste <- c("FDP", "SVP", "SP", "GRÜNE", "CVP/Mitte")
 
@@ -199,13 +199,12 @@ NRW2023_zeitreihe_Kanton |>
             caption = "opendata.swiss")
 
 
-
 ```
 
 ### 3. Anzahl gewählte Frauen
 
 ```{r}
-# Visualisierung 3: Summe Anzahl gewählter Frauen über alle Kantone und Parteien.
+# Summe der Anzahl gewählter Frauen aller Kantone und Parteien
 
 
 NRW2023_zeitreihe_Kanton |> 
@@ -216,11 +215,12 @@ NRW2023_zeitreihe_Kanton |>
   ggplot(aes(x = wahl_jahr,
              y = sum_anzahl_gewaehlte_f)) +
   geom_point() +
+  scale_x_continuous(breaks = seq(1991, 2023, by = 4)) +
   geom_line() +
   geom_text(aes(label = paste0(round(sum_anzahl_gewaehlte_f, 1))),
                 vjust = -0.85, size = 3) +
   theme_minimal() +
-      theme_minimal(base_size = 12) +
+      theme_minimal(base_size = 11) +
       theme(panel.grid.major.x = element_blank(),
             axis.text.x = element_text(angle = 90, vjust = 0.5)) +
       labs(title = "Entwicklung der Anzahl gewählter Frauen bei Nationalratswahlen",
@@ -229,7 +229,7 @@ NRW2023_zeitreihe_Kanton |>
            caption = "opendata.swiss")
   
 
-# Tabelle xy: Anzahl gewählte Frauen (mit gt und einer function(x)):
+# Anzahl gewählte Frauen (mit gt und einer function(x)):
 
 NRW2023_zeitreihe_Kanton |> 
   select(wahl_jahr, frauen_anteil, anzahl_gewaehlte_f) |> 
@@ -258,13 +258,12 @@ NRW2023_zeitreihe_Kanton |>
     prozent = "Prozent"
   )
   
-view(NRW2023_zeitreihe)
 ```
 
 ### 4. Entwicklung Frauen-Anteil in den Parteien und Kantone
 
 ```{r}
-# Visualisierung 4.1: Entwicklung Frauen-Anteil pro Partei in einem Kanton, pro Partei
+# Entwicklung des Frauen-Anteils auf nationaler Ebene für die Bundesratsparteien plus die Grünen und die GLP
 
 
 partei_bundespartei <- c("FDP", "SVP", "SP", "GRÜNE", "CVP/Mitte", "GLP")
@@ -294,7 +293,7 @@ NRW2023_zeitreihe_CH |>
 
 
 
-# und für den Kanton Zürich:
+# Entwicklung des Frauen-Anteils der Bundesratsparteien plus die Grünen und die GLP im Kanton Zürich:
 
 NRW2023_zeitreihe_Kanton |> 
  mutate(partei_bezeichnung_de = case_when(
@@ -313,7 +312,7 @@ NRW2023_zeitreihe_Kanton |>
   scale_color_colorblind() +
   theme_minimal() +
   labs(title = "Frauenanteil im Kanton Zürich",
-            y = "Frauenanteil",
+            y = "Frauenanteil in Prozent",
             x = "Wahljahr",
             color = "Partei",
             caption = "opendata.swiss")
