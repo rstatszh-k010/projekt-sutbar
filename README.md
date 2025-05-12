@@ -15,7 +15,7 @@ Die in dem vorliegenden Projekt verwendeten Daten stammen von opendata.swiss und
 
 ### `daten/raw/`
 
-Hier sind die Rohdaten abgelegt welche mittels eines Skript zu bereinigten Daten umgewandelt wurden. 
+Hier sind die Rohdaten abgelegt, welche mittels eines Skript zu bereinigten Daten umgewandelt wurden. 
 
 ### `daten/processed/`
 
@@ -25,7 +25,7 @@ Hier sind die bereinigten Rohdaten zu finden.
 
 ## Mitwirkende
 
-Vielen Dank an folgende Personen die mitgewirkt haben: 
+Vielen Dank an folgende Personen, die mitgewirkt haben: 
 
 [@larnsce](https://github.com/larnsce) 
 
