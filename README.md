@@ -1,8 +1,8 @@
 # Abschlussprojekt rstatsZH
 
-** Datenquelle: [Nationalratswahlen: Zeitreihen zu Listen, Kandidierenden, Parteistärken, Mandaten, gewählten Frauen und Männern, stärkste Partei (Schweiz und Kantone) \| opendata.swiss](https://opendata.swiss/de/dataset/nationalratswahlen-zeitreihen-zu-listen-kandidierenden-parteistarken-mandaten-gewahlten-frauen-)
+[Nationalratswahlen: Zeitreihen zu Listen, Kandidierenden, Parteistärken, Mandaten, gewählten Frauen und Männern, stärkste Partei (Schweiz und Kantone) \| opendata.swiss](https://opendata.swiss/de/dataset/nationalratswahlen-zeitreihen-zu-listen-kandidierenden-parteistarken-mandaten-gewahlten-frauen-)
 
-** Code: (https://github.com/rstatszh-k010/projekt-sutbar/blob/master/README.md)
+(https://github.com/rstatszh-k010/projekt-sutbar/blob/master/README.md)
 
 ## Projektbeschreibung
 
@@ -15,7 +15,7 @@ Die in dem vorliegenden Projekt verwendeten Daten stammen von opendata.swiss und
 
 ### `daten/raw/`
 
-Hier sind die Rohdaten abegelegt welche mittels eines Skript zu bereinigten Daten umgewandelt wurden. 
+Hier sind die Rohdaten abgelegt welche mittels eines Skript zu bereinigten Daten umgewandelt wurden. 
 
 ### `daten/processed/`
 
