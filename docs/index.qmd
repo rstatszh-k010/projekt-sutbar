@@ -100,21 +100,6 @@ NRW2023_zeitreihe_Kanton |>
     .default = partei_bezeichnung_de
   ))
 
-write_csv(x = NRW2023_CH_2023,
-          here::here("daten/processed/NRW2023_CH_2023"))
-write_csv(x = NRW2023_CH_2023_total,
-          here::here("daten/processed/NRW2023_CH_2023_total"))
-write_csv(x = NRW2023_zeitreihe,
-          here::here("daten/processed/NRW2023_zeitreihe"))
-write_csv(x = NRW2023_zeitreihe_CH,
-          here::here("daten/processed/NRW2023_zeitreihe_CH"))
-write_csv(x = NRW2023_zeitreihe_d,
-          here::here("daten/processed/NRW2023_zeitreihe_d"))
-write_csv(x = NRW2023_zeitreihe_FDP_Zürich,
-          here::here("daten/processed/NRW2023_zeitreihe_FDP_Zürich"))
-write_csv(x = NRW2023_zeitreihe_Kanton,
-          here::here("daten/processed/NRW2023_zeitreihe_Kanton"))
-
 
 ```
 
@@ -156,7 +141,7 @@ NRW2023_CH_2023_total <- NRW2023_CH_2023 |>
 
 ggplot(data = NRW2023_CH_2023_total,
        mapping = aes (y = partei_staerke,
-                      x = reorder(partei_bezeichnung_de, partei_staerke))) +
+                      x = reorder(partei_bezeichnung_de, -partei_staerke))) +
       geom_col() +
       geom_text(aes(label = paste0(round(partei_staerke, 1), "%")),
                 vjust = -0.5, size = 3) +
@@ -208,12 +193,12 @@ NRW2023_zeitreihe_Kanton |>
 # Wie hat sich die Parteienstärke bei den letzten neun Nationalratswahlen am Beispiel der FDP im Kanton Zürich entwickelt?
 ## Aussage wiederholt sich, Grafik weglassen :()
 
-NRW2023_zeitreihe_FDP_Zürich <- NRW2023_zeitreihe_Kanton |> 
-  filter(partei_bezeichnung_de == "FDP", kanton_bezeichnung == "Zürich") |> 
-  ggplot(data = NRW2023_zeitreihe_FDP_Zürich,
-       mapping = aes(x = wahl_jahr, 
-                     y = partei_staerke)) +
-      geom_line()
+# NRW2023_zeitreihe_FDP_Zürich <- NRW2023_zeitreihe_Kanton |> 
+#   filter(partei_bezeichnung_de == "FDP", kanton_bezeichnung == "Zürich") |> 
+#   ggplot(data = NRW2023_zeitreihe_FDP_Zürich,
+#        mapping = aes(x = wahl_jahr, 
+#                      y = partei_staerke)) +
+#       geom_line()
 ```
 
 ### 3. Anzahl gewählte Frauen
@@ -261,8 +246,16 @@ NRW2023_zeitreihe_Kanton |>
   group_by(wahl_jahr) |> 
   summarise(sum_anzahl_gewaehlte_f = sum(anzahl_gewaehlte_f)) |>
   mutate(prozent = gewaehlte_f_prozent(sum_anzahl_gewaehlte_f)) |> 
-  gt::gt() |>
-  labs (title = "Anteil der gewählten Frauen nach Wahljahr")
+  gt::gt()  |> 
+  gt::tab_header(
+    title = "Titel einfügen",
+    subtitle = "Untertitel einfügen"
+  ) |>
+  gt::cols_label(
+    wahl_jahr = "Wahljahr",
+    sum_anzahl_gewaehlte_f = "Anzahl",
+    prozent = "Prozent"
+  )
   
 ## und wie kann ich wahl_jahr in Wahljahr verändern? sum_anzahl_gewaehlt_f ind Total gewählte Frauen?
 
@@ -369,3 +362,27 @@ Folgende Fragen können mittels Analyse und Visualisierungen beantwortet werden:
 
     -   Tendenz des Frauenanteils ist bei allen Parteien auf nationaler Ebene steigend
     -   Aussage auf kantonaler Ebene können leider nicht gemacht werden, da die Fallzahl zu klein und somit keine klare Tendenz festzustellen ist
+
+```{r}
+# Aufbereitet Daten in den processed Ordner schreiben
+write_csv(x = NRW2023_CH_2023,
+          here::here("daten/processed/NRW2023_CH_2023"))
+
+write_csv(x = NRW2023_CH_2023_total,
+          here::here("daten/processed/NRW2023_CH_2023_total"))
+
+write_csv(x = NRW2023_zeitreihe,
+          here::here("daten/processed/NRW2023_zeitreihe"))
+
+write_csv(x = NRW2023_zeitreihe_CH,
+          here::here("daten/processed/NRW2023_zeitreihe_CH"))
+
+write_csv(x = NRW2023_zeitreihe_d,
+          here::here("daten/processed/NRW2023_zeitreihe_d"))
+
+# write_csv(x = NRW2023_zeitreihe_FDP_Zürich,
+#           here::here("daten/processed/NRW2023_zeitreihe_FDP_Zürich"))
+
+write_csv(x = NRW2023_zeitreihe_Kanton,
+          here::here("daten/processed/NRW2023_zeitreihe_Kanton"))
+```
