@@ -29,7 +29,7 @@ read_delim(here::here("daten/raw/sd-t-17.02-NRW2023-zeitreihen-parteien-APPENDIX
 
 # Einleitung
 
-Im Rahmen einer Weiterbildung des Kantons Zürich - Data Science mit R - wird vertieften Einblick in die Anwendung von R ermöglicht. Als Abschlussprojekt des Kurses wird ein OGD-Datensatz verwendet um den vermittelten Einblick direkt an einem eigenen Projekt anzuwenden und zu vertiefen.
+Im Rahmen einer Weiterbildung des Kantons Zürich - Data Science mit R - wird vertieften Einblick in die Anwendung von R ermöglicht. Als Abschlussprojekt des Kurses wird ein OGD-Datensatz verwendet um den gewonnen Einblick direkt an einem eigenen Projekt anzuwenden und zu vertiefen.
 
 # Daten
 
@@ -258,7 +258,7 @@ NRW2023_zeitreihe_Kanton |>
     prozent = "Prozent"
   )
   
-
+view(NRW2023_zeitreihe)
 ```
 
 ### 4. Entwicklung Frauen-Anteil in den Parteien und Kantone
