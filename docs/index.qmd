@@ -1,5 +1,5 @@
 ---
-title: "Resultate der Nationalratswahlen von 1991 bis 2023"
+title: "Analyse der Wahlresultate von den Nationalratswahlen von 1991 bis 2023"
 author: "Barbara Sutter"
 format:
   html: 
@@ -123,9 +123,7 @@ NRW2023_CH_2023 |>
   select(partei_bezeichnung_de, partei_staerke) |> 
   gt::gt()  |> 
   gt::tab_header(
-    title = "Parteienstärke",
-    subtitle = "Nationalratswahlen 2023"
-    # caption = "opendata.swiss"
+    title = "Parteienstärke bei den Nationalratswahlen 2023"
     ) |>
   gt::tab_source_note(
     source_note = gt::md(
@@ -137,10 +135,8 @@ NRW2023_CH_2023 |>
     partei_staerke = "Parteienstärke") |> 
   gt::fmt_number(columns = partei_staerke)
 
-## Tabelle: Parteistärke runden auf 2 Kommastellen und sortieren nach Grösse!
 
-
-# Die NA's bei der CVP und BDP werden auf 0 gesetzt, da der NA-Wert tatsächlich als 0 angesehen werden kann (Das Fehlen der Werte bedeutet inhaltlich 0, da es bei diesen zwei Parteien keine Nennungen gibt. Im Wahljahr 2023 exisitierten sie nicht mehr unter dem alten Namen.)
+# Die NA's bei der CVP und BDP werden auf 0 gesetzt (keine "missings", sondern effektiv keine Werte vorhanden)
 
 NRW2023_CH_2023_total <- NRW2023_CH_2023 |> 
   mutate(partei_staerke = replace_na(partei_staerke, 0),
@@ -154,7 +150,9 @@ NRW2023_CH_2023_total <- NRW2023_CH_2023 |>
          anzahl_gewaehlte_m = replace_na(anzahl_gewaehlte_m, 0),
          frauen_anteil = replace_na(frauen_anteil, 0))
 
+```
 
+```{r}
 # Visualisierung zur Verteilung der Parteien nach Parteienstärke
 
 ggplot(data = NRW2023_CH_2023_total,
@@ -171,7 +169,7 @@ ggplot(data = NRW2023_CH_2023_total,
       labs(title = "Parteienstärke bei den Nationalratswahlen 2023",
             y = "Parteienstärke in Prozent",
             x = "Partei",
-           caption = "opendata.swiss") 
+           caption = "opendata.swiss")
 ```
 
 ### 2. Direktvergleich der Parteienstärke im Kanton Zürich
@@ -189,8 +187,6 @@ NRW2023_zeitreihe_Kanton |>
   .default = partei_bezeichnung_de
   )) |>
   filter(kanton_bezeichnung == "Zürich") |> 
-  # CVP und BDP haben NA für 2023. CVP weil sie umbenannt wurde. BDP ist hier nicht 
-  # relevant. Deshalb herausgefiltert.
   filter(!is.na(partei_staerke)) |> 
   filter(partei_bezeichnung_de %in% partei_fuenf_groesste) |> 
   ggplot(mapping = aes(x = wahl_jahr, 
@@ -209,9 +205,9 @@ NRW2023_zeitreihe_Kanton |>
 
 ### 3. Anzahl gewählte Frauen
 
-```{r}
-# Summe der Anzahl gewählter Frauen aller Kantone und Parteien
+#### 3.1 Summe der Anzahl gewählter Frauen aller Kantone und Parteien
 
+```{r}
 
 NRW2023_zeitreihe_Kanton |> 
   select(wahl_jahr, frauen_anteil, anzahl_gewaehlte_f) |> 
@@ -233,10 +229,13 @@ NRW2023_zeitreihe_Kanton |>
             y = "Summe aller gewählten Frauen",
             x = "Wahljahr",
            caption = "opendata.swiss")
+
   
+```
 
-# Anzahl gewählte Frauen (mit gt und einer function(x)):
+#### 3.2 Anzahl gewählte Frauen in @tbl-Tabelle-2
 
+```{r}
 NRW2023_zeitreihe_Kanton |> 
   select(wahl_jahr, frauen_anteil, anzahl_gewaehlte_f) |> 
   filter(!is.na(anzahl_gewaehlte_f)) |> 
@@ -246,7 +245,11 @@ NRW2023_zeitreihe_Kanton |>
 gewaehlte_f_prozent <- function(x) {
   round(x / sum(x, na.rm = TRUE) * 100, 1)
 }
-  
+```
+
+```{r}
+#| label: tbl-Tabelle-2
+#| tbl-cap: "Tabelle 2"
 
 NRW2023_zeitreihe_Kanton |> 
   filter(!is.na(anzahl_gewaehlte_f)) |> 
@@ -258,6 +261,11 @@ NRW2023_zeitreihe_Kanton |>
     title = "Anzahl gewählte Frauen",
     subtitle = "Nationalratswahlen"
   ) |>
+  gt::tab_source_note(
+    source_note = gt::md(
+      "Datenquelle: [opendata.swiss](https://opendata.swiss/de/dataset/nationalratswahlen-zeitreihen-zu-listen-kandidierenden-parteistarken-mandaten-gewahlten-frauen-)"
+    )
+  ) |> 
   gt::cols_label(
     wahl_jahr = "Wahljahr",
     sum_anzahl_gewaehlte_f = "Anzahl",
@@ -266,11 +274,11 @@ NRW2023_zeitreihe_Kanton |>
   
 ```
 
-### 4. Entwicklung Frauen-Anteil in den Parteien und Kantone
+### 4. Entwicklung des Frauen-Anteils auf nationaler sowie auf kantonaler Ebene
 
 ```{r}
-# Entwicklung des Frauen-Anteils auf nationaler Ebene für die Bundesratsparteien plus die Grünen und die GLP
-
+# Entwicklung des Frauen-Anteils der Bundesratsparteien plus die Grünen und die GLP auf nationaler Ebene
+# Entwicklung des Frauen-Anteils der Bundesratsparteien plus die Grünen und die GLP im Kanton Zürich
 
 partei_bundespartei <- c("FDP", "SVP", "SP", "GRÜNE", "CVP/Mitte", "GLP")
 
@@ -281,11 +289,8 @@ NRW2023_zeitreihe_CH |>
   partei_bezeichnung_de == "Mitte" ~ "CVP/Mitte",
   .default = partei_bezeichnung_de
   )) |> 
-  # filter(kanton_bezeichnung == "Zürich") |> 
   filter(partei_bezeichnung_de %in% partei_bundespartei) |> 
-  # frauen_anteil hat ein NA für 2023 und CVP aufgrund der Umbenennung. Dies ist der Grund dafür, dass die Punkte nicht verbunden werden. NA herausfiltern und es passt.
   filter(!is.na(frauen_anteil)) |> 
-  # filter(partei_bezeichnung_de == "SVP") |> 
   ggplot(mapping = aes(x = wahl_jahr, 
                        y = frauen_anteil,
                        color = partei_bezeichnung_de)) +
@@ -300,8 +305,7 @@ NRW2023_zeitreihe_CH |>
             caption = "opendata.swiss")
 
 
-
-# Entwicklung des Frauen-Anteils der Bundesratsparteien plus die Grünen und die GLP im Kanton Zürich:
+# Entwicklung des Frauen-Anteils der Bundesratsparteien plus die Grünen und die GLP im Kanton Zürich
 
 NRW2023_zeitreihe_Kanton |> 
  mutate(partei_bezeichnung_de = case_when(
@@ -309,9 +313,9 @@ NRW2023_zeitreihe_Kanton |>
   partei_bezeichnung_de == "Mitte" ~ "CVP/Mitte",
   .default = partei_bezeichnung_de
   )) |> 
+  filter(!is.na(frauen_anteil)) |>
   filter(kanton_bezeichnung == "Zürich") |> 
   filter(partei_bezeichnung_de %in% partei_bundespartei) |> 
-  # filter(partei_bezeichnung_de == "SVP") |> 
   ggplot(mapping = aes(x = wahl_jahr, 
                        y = frauen_anteil,
                        color = partei_bezeichnung_de)) +
@@ -330,23 +334,19 @@ NRW2023_zeitreihe_Kanton |>
 
 # Schlussfolgerungen
 
-Folgende Fragen können mittels Analyse und Visualisierungen beantwortet werden:
+Folgende Fragen können mittels Analyse und den Visualisierungen beantwortet werden:
 
 1.  Wie verhält sich die Parteienstärke bei den Nationalratswahlen 2023?
 
-    -   Bei den NRW 2023 geht die SVP als klar stärkste Partei aus den Wahlen und liegt deutlich vor der SP. Danach positioniert sich die FDP an dritter Stelle knapp vor der Mitte.
+    -   Bei den NRW 2023 geht die SVP als klar stärkste Partei aus den Wahlen hervor und liegt deutlich vor der SP. Danach positioniert sich die FDP an dritter Stelle knapp vor der Mitte.
 
 2.  Wie hat sich die Parteienstärke der fünf grössten Parteien zwischen 1991 und 2023 im Kanton Zürich verändert?
 
     -   SVP wurde stärker
-
     -   SP blieb in etwa stabil
-
     -   FDP verliert klar
-
     -   CVP/Mitte blieb in etwa stabil
-
-    -   Grüne können leicht zunehmen (v.a. im Wahljahr 2019)
+    -   Grüne können leicht zulegen (v.a. im Wahljahr 2019)
 
 3.  Wie hat sich das Total der gewählten Frauen bei den Nationalratswahlen von 1991 bis 2023 entwickelt?
 
@@ -359,7 +359,8 @@ Folgende Fragen können mittels Analyse und Visualisierungen beantwortet werden:
 
 ```{r}
 
-# Aufbereitet Daten in den processed Ordner schreiben
+# Aufbereitete Daten werden in den processed Ordner gescchrieben
+
 write_csv(x = NRW2023_CH_2023,
           here::here("daten/processed/NRW2023_CH_2023"))
 
