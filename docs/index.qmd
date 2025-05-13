@@ -116,7 +116,7 @@ NRW2023_CH_2023
 In der @tbl-Tabelle-1 werden die Parteienstärke bei den Wahlen 2023 abgebildet. Die stärkste Partei ist klar die SVP, gefolgt von der SP, danach positioniert sich die FDP knapp vor der Mitte.
 
 ```{r}
-#| label: tab-Tabelle-1
+#| label: tbl-Tabelle-1
 #| tbl-cap: "Tabelle 1"
 
 NRW2023_CH_2023 |> 
@@ -124,12 +124,18 @@ NRW2023_CH_2023 |>
   gt::gt()  |> 
   gt::tab_header(
     title = "Parteienstärke",
-    subtitle = "Nationalratswahlen 2023",
+    subtitle = "Nationalratswahlen 2023"
     # caption = "opendata.swiss"
     ) |>
+  gt::tab_source_note(
+    source_note = gt::md(
+      "Datenquelle: [opendata.swiss](https://opendata.swiss/de/dataset/nationalratswahlen-zeitreihen-zu-listen-kandidierenden-parteistarken-mandaten-gewahlten-frauen-)"
+    )
+  ) |> 
   gt::cols_label(
     partei_bezeichnung_de = "Partei",
-    partei_staerke = "Parteienstärke")
+    partei_staerke = "Parteienstärke") |> 
+  gt::fmt_number(columns = partei_staerke)
 
 ## Tabelle: Parteistärke runden auf 2 Kommastellen und sortieren nach Grösse!
 
@@ -277,6 +283,8 @@ NRW2023_zeitreihe_CH |>
   )) |> 
   # filter(kanton_bezeichnung == "Zürich") |> 
   filter(partei_bezeichnung_de %in% partei_bundespartei) |> 
+  # frauen_anteil hat ein NA für 2023 und CVP aufgrund der Umbenennung. Dies ist der Grund dafür, dass die Punkte nicht verbunden werden. NA herausfiltern und es passt.
+  filter(!is.na(frauen_anteil)) |> 
   # filter(partei_bezeichnung_de == "SVP") |> 
   ggplot(mapping = aes(x = wahl_jahr, 
                        y = frauen_anteil,
