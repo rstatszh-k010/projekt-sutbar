@@ -299,7 +299,7 @@ NRW2023_zeitreihe_CH |>
   scale_color_colorblind() +
   theme_minimal() +
   labs(title = "Frauenanteil auf nationaler Ebene",
-            y = "Frauenanteil",
+            y = "Frauenanteil in Prozent",
             x = "Wahljahr",
             color = "Partei",
             caption = "opendata.swiss")
