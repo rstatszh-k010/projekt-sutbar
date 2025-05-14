@@ -2,10 +2,10 @@
 title: "Analyse der Wahlresultate von den Nationalratswahlen von 1991 bis 2023"
 author: "Barbara Sutter"
 format:
-  html: 
-    embeded-resources: true
+  html:
+    embed-resources: true
     toc: true
-execute: 
+execute:
   warning: false
 editor_options: 
   chunk_output_type: console
